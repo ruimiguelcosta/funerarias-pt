@@ -6,6 +6,7 @@
     <x-breadcrumbs :items="[
         ['label' => 'Início', 'url' => '/'],
         ['label' => 'Funerárias', 'url' => '/funerarias'],
+        ['label' => $funeralHome->city, 'url' => route('city-funeral-homes', $funeralHome->city_slug)],
         ['label' => $funeralHome->title]
     ]" />
     
@@ -94,6 +95,32 @@
                                 <p class="font-semibold text-gray-900">Horário</p>
                                 <p class="text-gray-600">Disponível 24 horas</p>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Funeral Home Description Card -->
+                <div class="bg-white rounded-lg border border-gray-200 mb-8 p-6">
+                    <h2 class="font-playfair text-2xl text-purple-700 mb-4">
+                        Sobre Esta Funerária
+                    </h2>
+                    <div class="prose prose-lg max-w-none">
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            Esta funerária oferece serviços completos e personalizados para apoiar as famílias durante momentos difíceis. 
+                            Com uma equipa experiente e dedicada, garantimos que cada serviço seja realizado com o máximo respeito, 
+                            dignidade e profissionalismo.
+                        </p>
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            Os nossos serviços incluem organização completa de cerimónias fúnebres, transporte, preparação e todos os 
+                            procedimentos necessários para honrar a memória dos seus entes queridos. Estamos comprometidos em 
+                            proporcionar conforto e apoio durante este período sensível.
+                        </p>
+                        <div class="bg-purple-50 border-l-4 border-purple-400 p-4 mt-6">
+                            <p class="text-purple-800 font-medium mb-2">💙 Compromisso com a Excelência</p>
+                            <p class="text-purple-700 text-sm">
+                                Trabalhamos com transparência, compaixão e atenção aos detalhes, 
+                                garantindo que cada família receba o cuidado e respeito que merece.
+                            </p>
                         </div>
                     </div>
                 </div>

@@ -2,16 +2,19 @@
 
 namespace App\Filament\Resources\FuneralHomes\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\URL;
+use Filament\Support\Enums\IconSize;
 
 class FuneralHomesTable
 {
@@ -24,62 +27,82 @@ class FuneralHomesTable
                     ->searchable()
                     ->sortable()
                     ->limit(50),
-                
+
                 TextColumn::make('category_name')
                     ->label('Categoria')
                     ->searchable()
                     ->sortable()
                     ->badge(),
-                
+
                 TextColumn::make('city')
                     ->label('Cidade')
                     ->searchable()
                     ->sortable(),
-                
-                TextColumn::make('state')
-                    ->label('Estado')
-                    ->searchable()
-                    ->sortable(),
-                
+
+
                 TextColumn::make('phone')
                     ->label('Telefone')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                
+
                 TextColumn::make('website')
                     ->label('Website')
                     ->url(fn ($record) => $record->website)
                     ->openUrlInNewTab()
                     ->toggleable(isToggledHiddenByDefault: true),
-                
+
                 TextColumn::make('total_score')
                     ->label('Pontuação')
                     ->numeric(decimalPlaces: 1)
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                
+
                 TextColumn::make('reviews_count')
                     ->label('Avaliações')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                
-                IconColumn::make('permanently_closed')
-                    ->label('Fechada')
+
+
+
+                IconColumn::make('is_suggested')
+                    ->label('Sugerida')
                     ->boolean()
-                    ->trueIcon('heroicon-o-x-circle')
-                    ->falseIcon('heroicon-o-check-circle')
-                    ->trueColor('danger')
-                    ->falseColor('success'),
-                
-                IconColumn::make('is_advertisement')
-                    ->label('Anúncio')
+                    ->trueIcon('heroicon-o-light-bulb')
+                    ->falseIcon('heroicon-o-light-bulb')
+                    ->trueColor('success')
+                    ->falseColor('gray')
+                    ->action(function (Model $record) {
+                        $record->update(['is_suggested' => ! $record->is_suggested]);
+                    })
+                    ->tooltip(fn (Model $record) => $record->is_suggested ? 'Clique para remover das sugestões' : 'Clique para marcar como sugerida'),
+
+                IconColumn::make('is_accepted')
+                    ->label('Aceite')
                     ->boolean()
-                    ->trueIcon('heroicon-o-megaphone')
-                    ->falseIcon('heroicon-o-building-office')
-                    ->trueColor('warning')
-                    ->falseColor('gray'),
-                
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('danger')
+                    ->action(function (Model $record) {
+                        $record->update(['is_accepted' => ! $record->is_accepted]);
+                    })
+                    ->tooltip(fn (Model $record) => $record->is_accepted ? 'Clique para rejeitar' : 'Clique para aceitar'),
+
+                IconColumn::make('copy_link')
+                    ->label('Copiar Link')
+                    ->icon('heroicon-o-clipboard')
+                    ->color('gray')
+                    ->action(function (Model $record, $livewire) {
+                        $url = route('funeral-home-detail', [
+                            'citySlug' => $record->city_slug,
+                            'funeralHomeSlug' => $record->slug
+                        ]);
+                        
+                        $livewire->js("navigator.clipboard.writeText('{$url}').then(() => { \$wire.dispatch('notify', { message: 'Link copiado!', type: 'success' }); })");
+                    })
+                    ->tooltip('Clique para copiar o link desta funerária'),
+
                 TextColumn::make('scraped_at')
                     ->label('Última Atualização')
                     ->dateTime('d/m/Y H:i')
@@ -87,17 +110,7 @@ class FuneralHomesTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('state')
-                    ->label('Estado')
-                    ->options(function () {
-                        return \App\Models\FuneralHome::query()
-                            ->whereNotNull('state')
-                            ->distinct()
-                            ->pluck('state', 'state')
-                            ->sort()
-                            ->toArray();
-                    }),
-                
+
                 SelectFilter::make('city')
                     ->label('Cidade')
                     ->options(function () {
@@ -108,15 +121,16 @@ class FuneralHomesTable
                             ->sort()
                             ->toArray();
                     }),
-                
-                TernaryFilter::make('permanently_closed')
-                    ->label('Fechada Permanentemente'),
-                
-                TernaryFilter::make('is_advertisement')
-                    ->label('É Anúncio'),
+
+
+
+                TernaryFilter::make('is_suggested')
+                    ->label('É Sugerida'),
+
+                TernaryFilter::make('is_accepted')
+                    ->label('É Aceite'),
             ])
             ->recordActions([
-                ViewAction::make(),
                 EditAction::make(),
             ])
             ->toolbarActions([
@@ -125,6 +139,7 @@ class FuneralHomesTable
                 ]),
             ])
             ->defaultSort('title')
-            ->paginated([10, 25, 50, 100]);
+            ->paginated([10, 25, 50, 100])
+            ->recordUrl(null);
     }
 }

@@ -5,8 +5,16 @@ use Illuminate\Support\Facades\Route;
 
 // Home page
 Route::get('/', function () {
+    $featuredFuneralHomes = \App\Models\FuneralHome::query()
+        ->with(['images', 'categories'])
+        ->where('is_accepted', true)
+        ->inRandomOrder()
+        ->limit(9)
+        ->get();
+    
     return view('pages.home', [
-        'seoPage' => 'home'
+        'seoPage' => 'home',
+        'featuredFuneralHomes' => $featuredFuneralHomes
     ]);
 })->name('home');
 
@@ -22,7 +30,36 @@ Route::get('/funerarias', function () {
     ]);
 })->name('funeral-homes');
 
-Route::get('/funeraria/{funeralHome}', function (\App\Models\FuneralHome $funeralHome) {
+// City funeral homes page
+Route::get('/{citySlug}', function ($citySlug) {
+    $city = \App\Models\FuneralHome::query()
+        ->where('city_slug', $citySlug)
+        ->first();
+    
+    if (!$city) {
+        abort(404);
+    }
+    
+    $funeralHomes = \App\Models\FuneralHome::query()
+        ->with(['images', 'categories'])
+        ->where('city_slug', $citySlug)
+        ->paginate(12);
+    
+    return view('pages.city-funeral-homes', [
+        'city' => $city,
+        'funeralHomes' => $funeralHomes,
+        'seoPage' => 'city-funeral-homes',
+        'seoData' => ['city' => $city]
+    ]);
+})->name('city-funeral-homes');
+
+Route::get('/{citySlug}/{funeralHomeSlug}', function ($citySlug, $funeralHomeSlug) {
+    $funeralHome = \App\Models\FuneralHome::query()
+        ->with(['reviews', 'images', 'categories'])
+        ->where('city_slug', $citySlug)
+        ->where('slug', $funeralHomeSlug)
+        ->firstOrFail();
+    
     return view('pages.funeral-home-detail', [
         'funeralHome' => $funeralHome,
         'seoPage' => 'funeral-home-detail',
@@ -67,6 +104,9 @@ Route::get('/politica-cookies', function () {
         'seoPage' => 'cookie-policy'
     ]);
 })->name('cookie-policy');
+
+// Reviews
+Route::post('/reviews', [App\Http\Controllers\ReviewController::class, 'store'])->name('reviews.store');
 
 // Sitemap
 Route::get('/sitemap.xml', GenerateSitemapAction::class)->name('sitemap');

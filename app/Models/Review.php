@@ -20,6 +20,12 @@ class Review extends Model
         'review_id',
     ];
 
+    // Accessor para compatibilidade com o componente
+    public function getCommentAttribute()
+    {
+        return $this->text;
+    }
+
     protected $casts = [
         'published_at' => 'datetime',
     ];

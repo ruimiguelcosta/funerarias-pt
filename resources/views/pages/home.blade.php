@@ -51,35 +51,40 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @include('components.funeral-home-card', [
-                    'id' => 1,
-                    'name' => 'Funerária Paz Eterna',
-                    'location' => 'Lisboa, Portugal',
-                    'phone' => '+351 21 123 4567',
-                    'rating' => 4.9,
-                    'description' => 'Serviços funerários completos com tradição e respeito há mais de 50 anos.',
-                    'image' => 'https://images.unsplash.com/photo-1584907797015-7554cd315667?w=400&h=300&fit=crop'
-                ])
-                
-                @include('components.funeral-home-card', [
-                    'id' => 2,
-                    'name' => 'Serviços Funerários Luz',
-                    'location' => 'Porto, Portugal',
-                    'phone' => '+351 22 987 6543',
-                    'rating' => 4.8,
-                    'description' => 'Dedicação e profissionalismo em cada momento, apoiando famílias com compaixão.',
-                    'image' => 'https://images.unsplash.com/photo-1519167758481-83f29da8c4f1?w=400&h=300&fit=crop'
-                ])
-                
-                @include('components.funeral-home-card', [
-                    'id' => 3,
-                    'name' => 'Funerária Serenidade',
-                    'location' => 'Coimbra, Portugal',
-                    'phone' => '+351 23 456 7890',
-                    'rating' => 4.7,
-                    'description' => 'Cuidado personalizado e atenção aos detalhes para honrar seus entes queridos.',
-                    'image' => 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=300&fit=crop'
-                ])
+                @forelse($featuredFuneralHomes as $funeralHome)
+                    @include('components.funeral-home-card', [
+                        'id' => $funeralHome->id,
+                        'name' => $funeralHome->title,
+                        'slug' => $funeralHome->slug,
+                        'city_slug' => $funeralHome->city_slug,
+                        'city' => $funeralHome->city,
+                        'country_code' => $funeralHome->country_code,
+                        'location' => $funeralHome->city ? $funeralHome->city . ', ' . $funeralHome->country_code : 'Portugal',
+                        'phone' => $funeralHome->phone,
+                        'rating' => $funeralHome->total_score,
+                        'description' => $funeralHome->description ? Str::limit($funeralHome->description, 120) : 'Serviços funerários com tradição e respeito.',
+                        'image' => $funeralHome->images->where('category', 'main')->first()?->local_url ?? 
+                                  $funeralHome->images->first()?->local_url ?? 
+                                  'https://images.unsplash.com/photo-1584907797015-7554cd315667?w=400&h=300&fit=crop',
+                        'categories' => $funeralHome->categories->pluck('name')->toArray(),
+                        'reviews_count' => $funeralHome->reviews_count
+                    ])
+                @empty
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-gray-500 text-lg">Nenhuma funerária em destaque encontrada.</p>
+                    </div>
+                @endforelse
+            </div>
+            
+            <!-- Link para todas as funerárias -->
+            <div class="text-center mt-12">
+                <a href="{{ route('funeral-homes') }}" 
+                   class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-500 text-white font-semibold rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl">
+                    <span>Ver Todas as Funerárias</span>
+                    <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </a>
             </div>
         </div>
     </section>

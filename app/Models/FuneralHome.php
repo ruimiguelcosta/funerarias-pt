@@ -22,6 +22,7 @@ class FuneralHome extends Model
         'neighborhood',
         'street',
         'city',
+        'city_slug',
         'postal_code',
         'state',
         'country_code',
@@ -29,6 +30,8 @@ class FuneralHome extends Model
         'phone_unformatted',
         'website',
         'description',
+        'generated_description',
+        'description_generated_at',
         'sub_title',
         'located_in',
         'plus_code',
@@ -51,6 +54,8 @@ class FuneralHome extends Model
         'language',
         'rank',
         'is_advertisement',
+        'is_suggested',
+        'is_accepted',
         'scraped_at',
     ];
 
@@ -62,6 +67,8 @@ class FuneralHome extends Model
         'temporarily_closed' => 'boolean',
         'claim_this_business' => 'boolean',
         'is_advertisement' => 'boolean',
+        'is_suggested' => 'boolean',
+        'is_accepted' => 'boolean',
         'scraped_at' => 'datetime',
     ];
 
@@ -101,5 +108,13 @@ class FuneralHome extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function getUrlAttribute(): string
+    {
+        return route('funeral-home-detail', [
+            'citySlug' => $this->city_slug,
+            'funeralHomeSlug' => $this->slug
+        ]);
     }
 }

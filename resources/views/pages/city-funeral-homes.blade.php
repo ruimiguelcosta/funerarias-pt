@@ -5,7 +5,8 @@
     <!-- Breadcrumbs -->
     <x-breadcrumbs :items="[
         ['label' => 'Início', 'url' => '/'],
-        ['label' => 'Funerárias']
+        ['label' => 'Funerárias', 'url' => route('funeral-homes')],
+        ['label' => $city->city]
     ]" />
     
     <!-- Hero Section -->
@@ -18,12 +19,15 @@
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
                 <h1 class="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold text-purple-700 mb-4">
-                    Todas as Funerárias
+                    Funerárias em {{ $city->city }}
                 </h1>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Encontre o serviço funerário ideal para sua família com dignidade, 
+                    Encontre os melhores serviços funerários em {{ $city->city }} com dignidade, 
                     respeito e profissionalismo.
                 </p>
+                <div class="mt-4 text-sm text-gray-500">
+                    {{ $funeralHomes->total() }} {{ $funeralHomes->total() == 1 ? 'funerária encontrada' : 'funerárias encontradas' }}
+                </div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
@@ -47,14 +51,14 @@
                     ])
                 @empty
                     <div class="col-span-full text-center py-12">
-                        <p class="text-gray-500 text-lg">Nenhuma funerária encontrada.</p>
+                        <p class="text-gray-500 text-lg">Nenhuma funerária encontrada em {{ $city->city }}.</p>
                     </div>
                 @endforelse
             </div>
             
             <!-- Pagination -->
             @if($funeralHomes->hasPages())
-                <div class="flex justify-center mb-8">
+                <div class="flex justify-center">
                     {{ $funeralHomes->links() }}
                 </div>
             @endif

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\FuneralHomes\Pages;
 
+use App\Filament\Resources\FuneralHomes\Actions\UploadFuneralHomesJsonAction;
 use App\Filament\Resources\FuneralHomes\FuneralHomeResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
@@ -14,6 +15,7 @@ class ListFuneralHomes extends ListRecords
     {
         return [
             CreateAction::make(),
+            UploadFuneralHomesJsonAction::make(),
         ];
     }
 }

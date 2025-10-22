@@ -38,11 +38,27 @@ class GenerateSitemapAction
             ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
             ->setPriority(0.3));
 
+        // Add city pages
+        $cities = FuneralHome::query()
+            ->select('city_slug', 'city')
+            ->whereNotNull('city_slug')
+            ->distinct()
+            ->get();
+
+        foreach ($cities as $city) {
+            $sitemap->add(Url::create("/{$city->city_slug}")
+                ->setLastModificationDate(now())
+                ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
+                ->setPriority(0.7));
+        }
+
+        // Add funeral home detail pages
         FuneralHome::query()
             ->whereNotNull('slug')
+            ->whereNotNull('city_slug')
             ->chunk(100, function ($funeralHomes) use ($sitemap) {
                 foreach ($funeralHomes as $funeralHome) {
-                    $sitemap->add(Url::create("/funeraria/{$funeralHome->slug}")
+                    $sitemap->add(Url::create("/{$funeralHome->city_slug}/{$funeralHome->slug}")
                         ->setLastModificationDate($funeralHome->scraped_at ?? now())
                         ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
                         ->setPriority(0.8));
