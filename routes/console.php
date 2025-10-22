@@ -13,3 +13,8 @@ Schedule::command('funeral-homes:generate-descriptions --limit=3')
     ->everyFiveMinutes()
     ->withoutOverlapping()
     ->runInBackground();
+
+// Schedule sitemap generation daily at 2 AM
+Schedule::command('sitemap:generate')
+    ->dailyAt('02:00')
+    ->withoutOverlapping();

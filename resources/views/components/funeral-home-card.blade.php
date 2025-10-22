@@ -1,14 +1,26 @@
 <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-gray-200 flex flex-col h-full">
-    <a href="{{ route('funeral-home-detail', ['citySlug' => $city_slug, 'funeralHomeSlug' => $slug]) }}" class="block">
+    @if($city_slug)
+        <a href="{{ route('funeral-home-detail', ['citySlug' => $city_slug, 'funeralHomeSlug' => $slug]) }}" class="block">
+    @else
+        <div class="block cursor-not-allowed opacity-50">
+    @endif
         <div class="h-48 overflow-hidden">
             <img src="{{ $image }}" alt="{{ $name }}" class="w-full h-full object-cover hover:scale-105 transition-all duration-300">
         </div>
-    </a>
+    @if($city_slug)
+        </a>
+    @else
+        </div>
+    @endif
     <div class="p-6 flex flex-col flex-grow">
         <div class="flex justify-between items-start mb-3">
-            <a href="{{ route('funeral-home-detail', ['citySlug' => $city_slug, 'funeralHomeSlug' => $slug]) }}" class="hover:text-purple-800 transition-colors duration-200">
+            @if($city_slug)
+                <a href="{{ route('funeral-home-detail', ['citySlug' => $city_slug, 'funeralHomeSlug' => $slug]) }}" class="hover:text-purple-800 transition-colors duration-200">
+                    <h3 class="font-playfair text-xl text-purple-700 leading-tight">{{ $name }}</h3>
+                </a>
+            @else
                 <h3 class="font-playfair text-xl text-purple-700 leading-tight">{{ $name }}</h3>
-            </a>
+            @endif
             @if($rating)
                 <div class="flex items-center gap-1 bg-yellow-100 px-2 py-1 rounded-full">
                     <svg class="h-4 w-4 fill-yellow-500 text-yellow-500" viewBox="0 0 20 20">
@@ -42,9 +54,13 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                 </svg>
-                <a href="{{ route('city-funeral-homes', $city_slug) }}" class="text-green-600 hover:text-green-800 transition-colors duration-200 font-medium">
-                    {{ $city }}
-                </a>
+                @if($city_slug)
+                    <a href="{{ route('city-funeral-homes', $city_slug) }}" class="text-green-600 hover:text-green-800 transition-colors duration-200 font-medium">
+                        {{ $city }}
+                    </a>
+                @else
+                    <span class="text-green-600 font-medium">{{ $city }}</span>
+                @endif
                 @if(isset($country_code) && $country_code)
                     <span class="text-gray-500">, {{ $country_code }}</span>
                 @endif
@@ -60,11 +76,17 @@
         </div>
         
         <div class="mt-auto">
-            <a href="{{ route('funeral-home-detail', ['citySlug' => $city_slug, 'funeralHomeSlug' => $slug]) }}">
-                <button class="w-full bg-gradient-to-r from-purple-600 to-purple-500 text-white py-3 rounded-lg font-medium hover:opacity-90 transition-all duration-300">
-                    Ver Detalhes
+            @if($city_slug)
+                <a href="{{ route('funeral-home-detail', ['citySlug' => $city_slug, 'funeralHomeSlug' => $slug]) }}">
+                    <button class="w-full bg-gradient-to-r from-purple-600 to-purple-500 text-white py-3 rounded-lg font-medium hover:opacity-90 transition-all duration-300">
+                        Ver Detalhes
+                    </button>
+                </a>
+            @else
+                <button class="w-full bg-gray-400 text-white py-3 rounded-lg font-medium cursor-not-allowed" disabled>
+                    Indisponível
                 </button>
-            </a>
+            @endif
         </div>
     </div>
 </div>

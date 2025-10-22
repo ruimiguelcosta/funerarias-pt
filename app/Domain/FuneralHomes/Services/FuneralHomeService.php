@@ -12,6 +12,7 @@ class FuneralHomeService
     {
         return FuneralHome::query()
             ->with(['images', 'categories'])
+            ->whereNotNull('city_slug')
             ->inRandomOrder()
             ->limit($limit)
             ->get();
@@ -21,6 +22,7 @@ class FuneralHomeService
     {
         return FuneralHome::query()
             ->with(['images', 'categories'])
+            ->whereNotNull('city_slug')
             ->paginate($perPage);
     }
 

@@ -58,8 +58,8 @@
             
             <!-- Pagination -->
             @if($funeralHomes->hasPages())
-                <div class="flex justify-center">
-                    {{ $funeralHomes->links() }}
+                <div class="mt-12">
+                    <x-pagination :paginator="$funeralHomes" />
                 </div>
             @endif
         </div>
