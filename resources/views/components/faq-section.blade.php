@@ -46,21 +46,19 @@ function toggleFAQ(index) {
 
 <!-- JSON-LD FAQ Schema -->
 <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        @foreach($faqs as $index => $faq)
-        {
-            "@type": "Question",
-            "name": "{{ $faq['question'] }}",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "{{ $faq['answer'] }}"
-            }
-        }{{ $index < count($faqs) - 1 ? ',' : '' }}
-        @endforeach
-    ]
-}
+{!! json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'FAQPage',
+    'mainEntity' => collect($faqs)->map(function($faq) {
+        return [
+            '@type' => 'Question',
+            'name' => $faq['question'],
+            'acceptedAnswer' => [
+                '@type' => 'Answer',
+                'text' => $faq['answer']
+            ]
+        ];
+    })->toArray()
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
 </script>
 @endif

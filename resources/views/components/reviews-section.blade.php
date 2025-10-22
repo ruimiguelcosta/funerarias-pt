@@ -52,37 +52,35 @@
 <!-- JSON-LD Reviews Schema -->
 @if($funeralHome)
 <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "FuneralHome",
-    "name": "{{ $funeralHome->title }}",
-    "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "{{ $funeralHome->total_score ?? 0 }}",
-        "reviewCount": "{{ $funeralHome->reviews_count ?? 0 }}",
-        "bestRating": "5",
-        "worstRating": "1"
-    },
-    "review": [
-        @foreach($reviews->take(5) as $index => $review)
-        {
-            "@type": "Review",
-            "author": {
-                "@type": "Person",
-                "name": "{{ $review->author_name ?? 'Cliente' }}"
-            },
-            "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": "{{ $review->rating }}",
-                "bestRating": "5",
-                "worstRating": "1"
-            },
-            "reviewBody": "{{ $review->comment ?? '' }}",
-            "datePublished": "{{ $review->created_at->toISOString() }}"
-        }{{ $index < min(4, $reviews->count() - 1) ? ',' : '' }}
-        @endforeach
-    ]
-}
+{!! json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'FuneralHome',
+    'name' => $funeralHome->title,
+    'aggregateRating' => $funeralHome->total_score ? [
+        '@type' => 'AggregateRating',
+        'ratingValue' => $funeralHome->total_score,
+        'reviewCount' => $funeralHome->reviews_count ?? 0,
+        'bestRating' => 5,
+        'worstRating' => 1
+    ] : null,
+    'review' => $reviews->take(5)->map(function($review) {
+        return [
+            '@type' => 'Review',
+            'author' => [
+                '@type' => 'Person',
+                'name' => $review->author_name ?? 'Cliente'
+            ],
+            'reviewRating' => [
+                '@type' => 'Rating',
+                'ratingValue' => $review->rating,
+                'bestRating' => 5,
+                'worstRating' => 1
+            ],
+            'reviewBody' => $review->comment ?? '',
+            'datePublished' => $review->created_at->toISOString()
+        ];
+    })->toArray()
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
 </script>
 @endif
 @endif
