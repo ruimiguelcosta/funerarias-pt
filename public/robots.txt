@@ -1,0 +1,36 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: {{ config('app.url') }}/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /filament/
+
+# Allow important pages
+Allow: /funerarias
+Allow: /funeraria/
+Allow: /quem-somos
+Allow: /politica-privacidade
+Allow: /politica-cookies
+
+# Block unnecessary files
+Disallow: *.json$
+Disallow: *.xml$
+Disallow: /storage/
+Disallow: /vendor/
+Disallow: /node_modules/
+
+# Allow images for better SEO
+Allow: /images/
+Allow: /storage/app/public/
+
+# Block search parameters
+Disallow: /*?*
+Allow: /*?search=*
+Allow: /*?page=*
