@@ -18,16 +18,16 @@ class ImageDownloadService
 
         try {
             $response = Http::timeout(30)->get($image->original_url);
-            
-            if (!$response->successful()) {
+
+            if (! $response->successful()) {
                 return false;
             }
 
             $filename = $this->generateFilename($image, $response);
             $path = "images/funeral-homes/{$image->funeral_home_id}/{$filename}";
-            
+
             Storage::disk('public')->put($path, $response->body());
-            
+
             $image->update([
                 'local_path' => $path,
                 'filename' => $filename,
@@ -51,11 +51,24 @@ class ImageDownloadService
             ->get();
 
         $downloaded = 0;
-        
+        $failed = 0;
+
         foreach ($images as $image) {
-            if ($this->downloadImage($image)) {
-                $downloaded++;
+            try {
+                if ($this->downloadImage($image)) {
+                    $downloaded++;
+                } else {
+                    $failed++;
+                    \Log::warning("Failed to download image {$image->id}: {$image->original_url}");
+                }
+            } catch (\Exception $e) {
+                $failed++;
+                \Log::error("Exception downloading image {$image->id}: ".$e->getMessage());
             }
+        }
+
+        if ($failed > 0) {
+            \Log::info("Image download completed: {$downloaded} successful, {$failed} failed");
         }
 
         return $downloaded;
@@ -65,7 +78,7 @@ class ImageDownloadService
     {
         $extension = $this->getExtensionFromMimeType($response->header('Content-Type'));
         $slug = $image->funeralHome ? Str::slug($image->funeralHome->title) : 'image';
-        
+
         return "{$slug}-{$image->id}.{$extension}";
     }
 
