@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $featuredFuneralHomes = \App\Models\FuneralHome::query()
         ->with(['images', 'categories'])
-        ->where('is_accepted', true)
         ->inRandomOrder()
         ->limit(9)
         ->get();
