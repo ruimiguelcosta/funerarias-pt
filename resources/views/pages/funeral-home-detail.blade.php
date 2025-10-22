@@ -100,6 +100,19 @@
                 </div>
                 
                 <!-- Funeral Home Description Card -->
+                @if($funeralHome->generated_description)
+                <div class="bg-white rounded-lg border border-gray-200 mb-8 p-6">
+                    <h2 class="font-playfair text-2xl text-purple-700 mb-4">
+                        Sobre Esta Funerária
+                    </h2>
+                    <div class="prose prose-lg max-w-none">
+                        <div class="text-gray-700 leading-relaxed whitespace-pre-line">
+                            {{ $funeralHome->generated_description }}
+                        </div>
+                    </div>
+                </div>
+                @else
+                <!-- Fallback description if no AI-generated description exists -->
                 <div class="bg-white rounded-lg border border-gray-200 mb-8 p-6">
                     <h2 class="font-playfair text-2xl text-purple-700 mb-4">
                         Sobre Esta Funerária
@@ -124,6 +137,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
                 
                 <!-- About Us Card -->
                 @if($funeralHome->description)

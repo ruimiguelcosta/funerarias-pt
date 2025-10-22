@@ -70,6 +70,7 @@ class FuneralHome extends Model
         'is_suggested' => 'boolean',
         'is_accepted' => 'boolean',
         'scraped_at' => 'datetime',
+        'description_generated_at' => 'datetime',
     ];
 
     public function getSlugOptions(): SlugOptions

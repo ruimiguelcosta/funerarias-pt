@@ -138,51 +138,6 @@
         </div>
     </section>
     
-    <!-- Blog Posts Section -->
-    <section class="py-20 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="font-playfair text-4xl md:text-5xl font-bold text-purple-700 mb-4">
-                    Últimos Artigos
-                </h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Informações e orientações para apoiar sua família em momentos difíceis.
-                </p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @include('components.blog-post-card', [
-                    'id' => 1,
-                    'title' => 'Como Planear um Funeral com Dignidade',
-                    'excerpt' => 'Orientações essenciais para organizar um funeral que honre a memória do seu ente querido com respeito e serenidade.',
-                    'author' => 'Maria Silva',
-                    'date' => '15 de Março, 2024',
-                    'image' => 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800&h=500&fit=crop',
-                    'category' => 'Orientação'
-                ])
-                
-                @include('components.blog-post-card', [
-                    'id' => 2,
-                    'title' => 'Tradições Funerárias em Portugal',
-                    'excerpt' => 'Conheça as tradições e costumes que fazem parte das cerimónias fúnebres portuguesas e o seu significado profundo.',
-                    'author' => 'João Santos',
-                    'date' => '10 de Março, 2024',
-                    'image' => 'https://images.unsplash.com/photo-1584907797015-7554cd315667?w=800&h=500&fit=crop',
-                    'category' => 'Cultura'
-                ])
-                
-                @include('components.blog-post-card', [
-                    'id' => 3,
-                    'title' => 'Apoio no Processo de Luto',
-                    'excerpt' => 'Recursos e orientações para enfrentar a perda de um ente querido com apoio profissional e comunitário.',
-                    'author' => 'Ana Costa',
-                    'date' => '5 de Março, 2024',
-                    'image' => 'https://images.unsplash.com/photo-1519167758481-83f29da8c4f1?w=800&h=500&fit=crop',
-                    'category' => 'Apoio'
-                ])
-            </div>
-        </div>
-    </section>
     
     <!-- FAQ Section -->
     <section class="py-20 bg-white">
