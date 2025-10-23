@@ -48,6 +48,11 @@
                             Política de Cookies
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('terms') }}" class="text-gray-600 hover:text-purple-700 transition-colors">
+                            Termos e Condições
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

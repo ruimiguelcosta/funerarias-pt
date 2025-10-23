@@ -100,6 +100,14 @@ class PageActionsTest extends TestCase
             ->assertViewHas('seoPage', 'cookie-policy');
     }
 
+    public function test_displays_terms_page(): void
+    {
+        $this->get('/termos')
+            ->assertStatus(200)
+            ->assertViewIs('pages.terms')
+            ->assertViewHas('seoPage', 'terms');
+    }
+
     public function test_displays_404_page_for_non_existent_routes(): void
     {
         $this->get('/rota/inexistente/com/muitos/segmentos')

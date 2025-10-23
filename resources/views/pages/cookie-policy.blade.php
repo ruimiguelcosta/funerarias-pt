@@ -24,6 +24,22 @@
 
                     <section class="mb-8">
                         <h2 class="font-playfair text-2xl font-semibold text-gray-900 mb-4">
+                            Conformidade Legal
+                        </h2>
+                        <p class="mb-4">
+                            Esta Política de Cookies está em conformidade com o Regulamento Geral sobre a Proteção de Dados (RGPD) 
+                            da União Europeia e com as diretrizes da Diretiva ePrivacy. Também seguimos as políticas e requisitos 
+                            estabelecidos pelo Google para a utilização de cookies e tecnologias de publicidade.
+                        </p>
+                        <p>
+                            Ao utilizar o nosso website, concorda com a utilização de cookies de acordo com esta política. 
+                            Se não concordar com a utilização de cookies, deverá configurar o seu navegador em conformidade 
+                            ou abster-se de utilizar este website.
+                        </p>
+                    </section>
+
+                    <section class="mb-8">
+                        <h2 class="font-playfair text-2xl font-semibold text-gray-900 mb-4">
                             O que são Cookies?
                         </h2>
                         <p>
@@ -92,6 +108,19 @@
                                     ajudando-nos a melhorar a experiência do utilizador.
                                 </p>
                             </div>
+
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                                    Cookies de Publicidade e Marketing
+                                </h3>
+                                <p>
+                                    Estes cookies são utilizados para apresentar anúncios relevantes aos visitantes e para medir 
+                                    a eficácia das campanhas publicitárias. Incluem cookies do Google AdSense e de outros parceiros 
+                                    publicitários que nos ajudam a financiar e manter este website. Estes cookies podem rastrear 
+                                    a sua navegação em diferentes websites para criar um perfil dos seus interesses e apresentar 
+                                    anúncios personalizados.
+                                </p>
+                            </div>
                         </div>
                     </section>
 
@@ -113,10 +142,73 @@
                         <h2 class="font-playfair text-2xl font-semibold text-gray-900 mb-4">
                             Cookies de Terceiros
                         </h2>
-                        <p>
+                        <p class="mb-4">
                             Em alguns casos, utilizamos cookies fornecidos por terceiros de confiança. Os cookies de terceiros 
-                            são utilizados para fins analíticos e de melhoria da experiência do utilizador.
+                            são utilizados para fins analíticos, de melhoria da experiência do utilizador e para apresentação 
+                            de publicidade relevante.
                         </p>
+
+                        <div class="bg-purple-50 border-l-4 border-purple-600 p-6 mb-6">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3">
+                                Google AdSense e Cookies Publicitários
+                            </h3>
+                            <p class="mb-4">
+                                Este website utiliza o Google AdSense, um serviço de publicidade fornecido pela Google LLC. 
+                                O Google AdSense utiliza cookies e outras tecnologias de rastreamento para:
+                            </p>
+                            <ul class="list-disc pl-6 space-y-2 mb-4">
+                                <li>Apresentar anúncios relevantes baseados nas suas visitas anteriores ao nosso website</li>
+                                <li>Apresentar anúncios baseados nas suas visitas a outros websites na Internet</li>
+                                <li>Medir a eficácia dos anúncios e a interação dos utilizadores</li>
+                                <li>Prevenir a exibição repetida dos mesmos anúncios</li>
+                            </ul>
+                            <p class="mb-4">
+                                O Google e os seus parceiros utilizam cookies para apresentar anúncios com base nas visitas 
+                                anteriores do utilizador a este ou outros websites. A utilização de cookies de publicidade 
+                                permite ao Google e aos seus parceiros apresentar anúncios aos utilizadores com base na sua 
+                                visita a este site e/ou a outros sites na Internet.
+                            </p>
+                            <p class="mb-4">
+                                <strong class="text-gray-900">Gestão de Preferências de Anúncios:</strong><br>
+                                Pode desativar a utilização de cookies para publicidade personalizada visitando as 
+                                <a href="https://www.google.com/settings/ads" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer" 
+                                   class="text-purple-700 hover:underline font-medium">
+                                    Definições de Anúncios do Google
+                                </a>. 
+                                Alternativamente, pode desativar a utilização de cookies de terceiros para publicidade 
+                                personalizada visitando 
+                                <a href="https://www.aboutads.info" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer" 
+                                   class="text-purple-700 hover:underline font-medium">
+                                    www.aboutads.info
+                                </a>.
+                            </p>
+                            <p>
+                                Para mais informações sobre como o Google utiliza dados quando utiliza websites ou 
+                                aplicações dos nossos parceiros, consulte a página 
+                                <a href="https://policies.google.com/technologies/ads" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer" 
+                                   class="text-purple-700 hover:underline font-medium">
+                                    Como a Google utiliza dados quando utiliza sites ou aplicações dos nossos parceiros
+                                </a>.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3">
+                                Outros Serviços de Terceiros
+                            </h3>
+                            <p>
+                                Além do Google AdSense, podemos utilizar outros serviços de terceiros que também 
+                                colocam cookies no seu dispositivo, incluindo serviços de análise e ferramentas 
+                                de monitorização de desempenho. Estes serviços têm as suas próprias políticas de 
+                                privacidade e cookies.
+                            </p>
+                        </div>
                     </section>
 
                     <section class="mb-8">

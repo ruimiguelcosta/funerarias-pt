@@ -16,6 +16,7 @@ use App\Actions\Http\Pages\HomePageAction;
 use App\Actions\Http\Pages\NearbyMapPageAction;
 use App\Actions\Http\Pages\NotFoundPageAction;
 use App\Actions\Http\Pages\PrivacyPolicyPageAction;
+use App\Actions\Http\Pages\TermsPageAction;
 use App\Actions\Http\Reviews\StoreReviewAction;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,8 @@ Route::get('/post/{slug}', BlogPostDetailPageAction::class)->name('blog-post-det
 Route::get('/politica-privacidade', PrivacyPolicyPageAction::class)->name('privacy-policy');
 
 Route::get('/politica-cookies', CookiePolicyPageAction::class)->name('cookie-policy');
+
+Route::get('/termos', TermsPageAction::class)->name('terms');
 
 Route::post('/reviews', StoreReviewAction::class)->name('reviews.store');
 
