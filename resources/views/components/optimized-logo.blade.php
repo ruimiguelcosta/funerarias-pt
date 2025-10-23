@@ -12,17 +12,30 @@
     
     $avifPath = "{$directory}/{$filename}-{$size}.avif";
     $webpPath = "{$directory}/{$filename}-{$size}.webp";
+    
+    $hasAvif = file_exists($avifPath);
+    $hasWebp = file_exists($webpPath);
 @endphp
 
-<picture>
-    @if(file_exists($avifPath))
-        <source srcset="{{ asset('images/' . basename($avifPath)) }}" type="image/avif">
-    @endif
-    
-    @if(file_exists($webpPath))
-        <source srcset="{{ asset('images/' . basename($webpPath)) }}" type="image/webp">
-    @endif
-    
+@if($hasAvif || $hasWebp)
+    <picture>
+        @if($hasAvif)
+            <source srcset="{{ asset('images/' . basename($avifPath)) }}" type="image/avif">
+        @endif
+        
+        @if($hasWebp)
+            <source srcset="{{ asset('images/' . basename($webpPath)) }}" type="image/webp">
+        @endif
+        
+        <img 
+            src="{{ asset('images/logo.png') }}" 
+            alt="{{ $alt }}" 
+            class="{{ $class }}"
+            loading="eager"
+            decoding="sync"
+        >
+    </picture>
+@else
     <img 
         src="{{ asset('images/logo.png') }}" 
         alt="{{ $alt }}" 
@@ -30,4 +43,4 @@
         loading="eager"
         decoding="sync"
     >
-</picture>
+@endif
