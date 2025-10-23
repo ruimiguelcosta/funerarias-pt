@@ -4,6 +4,7 @@ use App\Actions\Http\GenerateSitemapAction;
 use App\Actions\Http\Pages\AboutPageAction;
 use App\Actions\Http\Pages\BlogPostDetailPageAction;
 use App\Actions\Http\Pages\CityFuneralHomesPageAction;
+use App\Actions\Http\Pages\ContactPageAction;
 use App\Actions\Http\Pages\CookiePolicyPageAction;
 use App\Actions\Http\Pages\FuneralHomeDetailPageAction;
 use App\Actions\Http\Pages\FuneralHomesPageAction;
@@ -18,6 +19,8 @@ Route::get('/', HomePageAction::class)->name('home');
 Route::get('/funerarias', FuneralHomesPageAction::class)->name('funeral-homes');
 
 Route::get('/quem-somos', AboutPageAction::class)->name('about');
+
+Route::get('/contactos', ContactPageAction::class)->name('contact');
 
 Route::get('/post/{id}', BlogPostDetailPageAction::class)->name('blog-post-detail');
 

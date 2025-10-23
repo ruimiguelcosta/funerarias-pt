@@ -17,9 +17,11 @@
                class="text-sm font-medium transition-all duration-300 hover:text-purple-800 {{ request()->routeIs('about') ? 'text-purple-800' : 'text-purple-700' }}">
                 Quem Somos
             </a>
-            <button class="bg-gradient-to-r from-purple-600 to-purple-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-all duration-300">
-                Contactar
-            </button>
+            <a href="{{ route('contact') }}">
+                <button class="bg-gradient-to-r from-purple-600 to-purple-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-all duration-300">
+                    Contactar
+                </button>
+            </a>
         </div>
     </div>
 </nav>

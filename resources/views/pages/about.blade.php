@@ -2,25 +2,23 @@
 
 @section('content')
 <div class="pt-20">
-    <!-- Breadcrumbs -->
     <x-breadcrumbs :items="[
         ['label' => 'Início', 'url' => '/'],
         ['label' => 'Quem Somos']
     ]" />
-    
-    <!-- Hero Section -->
-    <div class="h-[400px] bg-cover bg-center relative" 
-         style="background-image: url('https://images.unsplash.com/photo-1584907797015-7554cd315667?w=800&h=400&fit=crop')">
-        <div class="absolute inset-0 bg-gradient-to-br from-purple-800/95 to-purple-600/90"></div>
+
+    <div class="h-[400px] bg-cover bg-center relative"
+         style="background-image: url('{{ asset('images/cemiterio.jpg') }}')">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-800/60 to-purple-600/20"></div>
     </div>
-    
+
     <section class="py-16">
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto">
                 <h1 class="font-playfair text-4xl md:text-5xl font-bold text-purple-700 mb-8">
                     Quem Somos
                 </h1>
-        
+
                 <div class="prose prose-lg max-w-none">
                     <p class="text-gray-600 text-lg mb-8">
                         Somos uma plataforma dedicada a conectar famílias com serviços funerários de qualidade e confiança em momentos de necessidade.
@@ -31,8 +29,8 @@
                             Nossa Missão
                         </h2>
                         <p class="text-gray-600">
-                            Nossa missão é proporcionar dignidade, respeito e apoio às famílias durante os momentos mais difíceis. 
-                            Conectamos você com funerárias profissionais que oferecem serviços compassivos e de alta qualidade, 
+                            Nossa missão é proporcionar dignidade, respeito e apoio às famílias durante os momentos mais difíceis.
+                            Conectamos você com funerárias profissionais que oferecem serviços compassivos e de alta qualidade,
                             garantindo que cada despedida seja realizada com a reverência que seus entes queridos merecem.
                         </p>
                     </section>
@@ -100,11 +98,11 @@
                             Nossa História
                         </h2>
                         <p class="text-gray-600 mb-4">
-                            Fundada com o objetivo de facilitar o acesso a serviços funerários de qualidade, nossa plataforma nasceu 
+                            Fundada com o objetivo de facilitar o acesso a serviços funerários de qualidade, nossa plataforma nasceu
                             da necessidade de criar uma ponte entre famílias e funerárias profissionais em todo o país.
                         </p>
                         <p class="text-gray-600">
-                            Ao longo dos anos, temos ajudado milhares de famílias a encontrar os serviços adequados para homenagear 
+                            Ao longo dos anos, temos ajudado milhares de famílias a encontrar os serviços adequados para homenagear
                             seus entes queridos com dignidade e respeito, tornando-nos uma referência no setor.
                         </p>
                     </section>
@@ -114,8 +112,8 @@
                             Compromisso com Você
                         </h2>
                         <p class="text-gray-600">
-                            Estamos comprometidos em oferecer uma experiência que combine tecnologia, empatia e profissionalismo. 
-                            Nossa equipe trabalha constantemente para melhorar nossa plataforma e garantir que você encontre 
+                            Estamos comprometidos em oferecer uma experiência que combine tecnologia, empatia e profissionalismo.
+                            Nossa equipe trabalha constantemente para melhorar nossa plataforma e garantir que você encontre
                             exatamente o que precisa quando mais precisa.
                         </p>
                     </section>
