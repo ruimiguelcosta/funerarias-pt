@@ -2,11 +2,6 @@
 
 @section('content')
 <div class="pt-20">
-    <!-- Breadcrumbs -->
-    <x-breadcrumbs :items="[
-        ['label' => 'Início', 'url' => '/']
-    ]" />
-    
     <!-- Hero Section -->
     <section class="relative min-h-[600px] flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 bg-cover bg-center" 
@@ -30,9 +25,11 @@
                         Ver Funerárias
                     </button>
                 </a>
-                <button class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-purple-700 transition-all duration-300">
-                    Saber Mais
-                </button>
+                <a href="{{ route('about') }}">
+                    <button class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-purple-700 transition-all duration-300">
+                        Saber Mais
+                    </button>
+                </a>
             </div>
         </div>
     </section>
