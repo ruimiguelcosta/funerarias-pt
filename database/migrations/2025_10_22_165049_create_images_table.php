@@ -22,7 +22,7 @@ return new class extends Migration
             $table->boolean('is_downloaded')->default(false);
             $table->timestamp('downloaded_at')->nullable();
             $table->timestamps();
-            
+
             $table->index(['funeral_home_id', 'category']);
             $table->index('is_downloaded');
         });

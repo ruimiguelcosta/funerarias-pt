@@ -94,7 +94,7 @@ class ImageOptimizationService
     {
         $width = $maxWidth;
         $height = round($maxWidth / $aspectRatio);
-        
+
         return [$width, $height];
     }
 

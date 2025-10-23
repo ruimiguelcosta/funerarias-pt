@@ -16,26 +16,28 @@ class FuneralHomeSeeder extends Seeder
     public function run(): void
     {
         $jsonPath = storage_path('app/private/json/funerarias_pt.json');
-        
-        if (!File::exists($jsonPath)) {
-            $this->command->error('JSON file not found at: ' . $jsonPath);
+
+        if (! File::exists($jsonPath)) {
+            $this->command->error('JSON file not found at: '.$jsonPath);
+
             return;
         }
 
         $data = json_decode(File::get($jsonPath), true);
-        
-        if (!$data) {
+
+        if (! $data) {
             $this->command->error('Failed to parse JSON file');
+
             return;
         }
 
-        $this->command->info('Starting import of ' . count($data) . ' funeral homes...');
+        $this->command->info('Starting import of '.count($data).' funeral homes...');
 
         foreach ($data as $index => $item) {
-            $this->command->info("Processing funeral home " . ($index + 1) . ": " . $item['title']);
-            
+            $this->command->info('Processing funeral home '.($index + 1).': '.$item['title']);
+
             $funeralHome = $this->createFuneralHome($item);
-            
+
             $this->createCategories($funeralHome, $item);
             $this->createOpeningHours($funeralHome, $item);
             $this->createPeopleAlsoSearch($funeralHome, $item);
@@ -55,6 +57,7 @@ class FuneralHomeSeeder extends Seeder
 
         if ($funeralHome) {
             $this->command->info("Funeral home already exists: {$item['title']}");
+
             return $funeralHome;
         }
 
@@ -107,7 +110,7 @@ class FuneralHomeSeeder extends Seeder
                     ['name' => $categoryName],
                     ['description' => null, 'is_active' => true]
                 );
-                
+
                 $funeralHome->categories()->syncWithoutDetaching([$category->id]);
             }
         }

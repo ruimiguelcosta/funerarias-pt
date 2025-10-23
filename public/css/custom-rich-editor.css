@@ -1,0 +1,47 @@
+/* Custom RichEditor Styles */
+.ProseMirror {
+    min-height: 400px !important;
+    height: 400px !important;
+    padding: 1rem !important;
+}
+
+.ProseMirror-focused {
+    min-height: 400px !important;
+    height: 400px !important;
+}
+
+/* Force height with maximum specificity */
+.filament-forms-rich-editor-component .ProseMirror,
+.ProseMirror.tiptap,
+.ProseMirror.ProseMirror-focused {
+    min-height: 400px !important;
+    height: 400px !important;
+    padding: 1rem !important;
+}
+
+/* Additional styling for better UX */
+.ProseMirror p {
+    margin-bottom: 0.75rem !important;
+}
+
+.ProseMirror h2 {
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
+}
+
+.ProseMirror h3 {
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    margin-top: 1.25rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.ProseMirror blockquote {
+    border-left: 4px solid var(--color-primary) !important;
+    padding-left: 1rem !important;
+    margin: 1rem 0 !important;
+    font-style: italic !important;
+    color: var(--color-muted-foreground) !important;
+}

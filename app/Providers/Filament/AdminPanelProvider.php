@@ -10,6 +10,7 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Facades\FilamentAsset;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -21,6 +22,21 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
 {
+    public function boot(): void
+    {
+        FilamentAsset::register([
+            \Filament\Support\Assets\Css::make('custom-rich-editor', asset('css/custom-rich-editor.css')),
+        ]);
+
+        // Adicionar CSS inline para garantir que seja aplicado
+        FilamentAsset::register([
+            \Filament\Support\Assets\Css::make('inline-rich-editor', 'data:text/css;base64,'.base64_encode('
+                .ProseMirror { min-height: 400px !important; height: 400px !important; padding: 1rem !important; }
+                .ProseMirror-focused { min-height: 400px !important; height: 400px !important; }
+            ')),
+        ]);
+    }
+
     public function panel(Panel $panel): Panel
     {
         return $panel

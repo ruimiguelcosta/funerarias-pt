@@ -49,7 +49,7 @@ return new class extends Migration
             $table->boolean('is_advertisement')->default(false);
             $table->timestamp('scraped_at')->nullable();
             $table->timestamps();
-            
+
             $table->index(['city', 'country_code']);
             $table->index('place_id');
             $table->index('total_score');

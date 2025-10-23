@@ -15,7 +15,7 @@ class MigrateFuneralHomeImages extends Command
     public function handle(): int
     {
         $limit = $this->option('limit');
-        
+
         $this->info("Migrating images for {$limit} funeral homes...");
 
         $funeralHomes = FuneralHome::query()
@@ -26,6 +26,7 @@ class MigrateFuneralHomeImages extends Command
 
         if ($funeralHomes->isEmpty()) {
             $this->info('No funeral homes with images found.');
+
             return Command::SUCCESS;
         }
 
@@ -59,8 +60,8 @@ class MigrateFuneralHomeImages extends Command
 
         $bar->finish();
         $this->newLine();
-        
-        $this->info("Migration completed!");
+
+        $this->info('Migration completed!');
         $this->info("✅ Migrated: {$migrated}");
         $this->info("⏭️ Skipped: {$skipped}");
 

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('published_at')->nullable();
             $table->string('review_id')->nullable();
             $table->timestamps();
-            
+
             $table->index(['funeral_home_id', 'rating']);
             $table->index('published_at');
         });

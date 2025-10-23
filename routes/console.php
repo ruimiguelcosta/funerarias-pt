@@ -18,3 +18,9 @@ Schedule::command('funeral-homes:generate-descriptions --limit=3')
 Schedule::command('sitemap:generate')
     ->dailyAt('02:00')
     ->withoutOverlapping();
+
+// Schedule automatic post generation every 2 days at 9 AM
+Schedule::command('posts:generate')
+    ->cron('0 9 */2 * *')
+    ->withoutOverlapping()
+    ->runInBackground();

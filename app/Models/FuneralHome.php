@@ -115,7 +115,7 @@ class FuneralHome extends Model
     {
         return route('funeral-home-detail', [
             'citySlug' => $this->city_slug,
-            'funeralHomeSlug' => $this->slug
+            'funeralHomeSlug' => $this->slug,
         ]);
     }
 }

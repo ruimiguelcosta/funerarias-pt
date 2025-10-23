@@ -92,3 +92,65 @@
     animation: fade-in 0.6s ease-out;
   }
 }
+
+/* Filament RichEditor customizations */
+@layer components {
+  /* Rich Editor Height Customization - More specific selectors */
+  .filament-forms-rich-editor-component .ProseMirror,
+  .ProseMirror.tiptap,
+  .ProseMirror.ProseMirror-focused {
+    min-height: 800px !important;
+    padding: 1rem !important;
+  }
+  
+  /* Force height even when focused */
+  .ProseMirror-focused {
+    min-height: 800px !important;
+  }
+  
+  /* Rich Editor Toolbar Styling */
+  .filament-forms-rich-editor-component .rich-editor-toolbar {
+    border-bottom: 1px solid var(--color-border) !important;
+    background-color: var(--color-muted) !important;
+  }
+  
+  /* Rich Editor Content Area */
+  .ProseMirror p {
+    margin-bottom: 0.75rem !important;
+  }
+  
+  .ProseMirror h2 {
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  
+  .ProseMirror h3 {
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    margin-top: 1.25rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .ProseMirror blockquote {
+    border-left: 4px solid var(--color-primary) !important;
+    padding-left: 1rem !important;
+    margin: 1rem 0 !important;
+    font-style: italic !important;
+    color: var(--color-muted-foreground) !important;
+  }
+}
+
+/* Force RichEditor height with higher specificity */
+@layer utilities {
+  .ProseMirror {
+    min-height: 800px !important;
+    height: 800px !important;
+  }
+  
+  .ProseMirror-focused {
+    min-height: 800px !important;
+    height: 800px !important;
+  }
+}

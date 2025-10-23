@@ -16,14 +16,14 @@ class GenerateFuneralHomeDescriptions extends Command
     public function handle(): int
     {
         $limit = $this->option('limit');
-        
+
         $this->info("Generating descriptions for {$limit} funeral homes...");
 
         // Get funeral homes without generated descriptions or with old ones
         $funeralHomes = FuneralHome::query()
             ->where(function ($query) {
                 $query->whereNull('generated_description')
-                      ->orWhere('description_generated_at', '<', now()->subDays(30));
+                    ->orWhere('description_generated_at', '<', now()->subDays(30));
             })
             ->whereNotNull('title')
             ->whereNotNull('city')
@@ -32,6 +32,7 @@ class GenerateFuneralHomeDescriptions extends Command
 
         if ($funeralHomes->isEmpty()) {
             $this->info('No funeral homes need description generation.');
+
             return Command::SUCCESS;
         }
 
@@ -44,7 +45,7 @@ class GenerateFuneralHomeDescriptions extends Command
         foreach ($funeralHomes as $funeralHome) {
             try {
                 $description = $this->generateDescription($funeralHome);
-                
+
                 if ($description) {
                     $funeralHome->update([
                         'generated_description' => $description,
@@ -55,20 +56,20 @@ class GenerateFuneralHomeDescriptions extends Command
                     $errorCount++;
                 }
             } catch (\Exception $e) {
-                Log::error("Failed to generate description for funeral home {$funeralHome->id}: " . $e->getMessage());
+                Log::error("Failed to generate description for funeral home {$funeralHome->id}: ".$e->getMessage());
                 $errorCount++;
             }
 
             $bar->advance();
-            
+
             // Add delay to avoid rate limiting
             sleep(2);
         }
 
         $bar->finish();
         $this->newLine();
-        
-        $this->info("Description generation completed!");
+
+        $this->info('Description generation completed!');
         $this->info("✅ Successfully generated: {$successCount}");
         $this->info("❌ Failed: {$errorCount}");
 
@@ -78,9 +79,10 @@ class GenerateFuneralHomeDescriptions extends Command
     private function generateDescription(FuneralHome $funeralHome): ?string
     {
         $openaiApiKey = config('services.openai.api_key');
-        
-        if (!$openaiApiKey) {
+
+        if (! $openaiApiKey) {
             $this->error('OpenAI API key not configured. Please set OPENAI_API_KEY in your .env file.');
+
             return null;
         }
 
@@ -106,15 +108,15 @@ FORMATO: Texto corrido, sem bullet points, com parágrafos bem estruturados.";
 
         try {
             $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . $openaiApiKey,
+                'Authorization' => 'Bearer '.$openaiApiKey,
                 'Content-Type' => 'application/json',
             ])->timeout(30)->post('https://api.openai.com/v1/chat/completions', [
                 'model' => 'gpt-4',
                 'messages' => [
                     [
                         'role' => 'user',
-                        'content' => $prompt
-                    ]
+                        'content' => $prompt,
+                    ],
                 ],
                 'max_tokens' => 500,
                 'temperature' => 0.7,
@@ -122,13 +124,16 @@ FORMATO: Texto corrido, sem bullet points, com parágrafos bem estruturados.";
 
             if ($response->successful()) {
                 $data = $response->json();
+
                 return $data['choices'][0]['message']['content'] ?? null;
             } else {
-                Log::error('OpenAI API error: ' . $response->body());
+                Log::error('OpenAI API error: '.$response->body());
+
                 return null;
             }
         } catch (\Exception $e) {
-            Log::error('OpenAI API exception: ' . $e->getMessage());
+            Log::error('OpenAI API exception: '.$e->getMessage());
+
             return null;
         }
     }
@@ -137,31 +142,31 @@ FORMATO: Texto corrido, sem bullet points, com parágrafos bem estruturados.";
     {
         $context = "Nome: {$funeralHome->title}\n";
         $context .= "Cidade: {$funeralHome->city}\n";
-        
+
         if ($funeralHome->address) {
             $context .= "Endereço: {$funeralHome->address}\n";
         }
-        
+
         if ($funeralHome->phone) {
             $context .= "Telefone: {$funeralHome->phone}\n";
         }
-        
+
         if ($funeralHome->website) {
             $context .= "Website: {$funeralHome->website}\n";
         }
-        
+
         if ($funeralHome->category_name) {
             $context .= "Categoria: {$funeralHome->category_name}\n";
         }
-        
+
         if ($funeralHome->description) {
             $context .= "Descrição existente: {$funeralHome->description}\n";
         }
-        
+
         if ($funeralHome->total_score) {
             $context .= "Avaliação média: {$funeralHome->total_score}/5\n";
         }
-        
+
         if ($funeralHome->reviews_count) {
             $context .= "Número de avaliações: {$funeralHome->reviews_count}\n";
         }

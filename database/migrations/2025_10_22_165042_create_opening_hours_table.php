@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('day');
             $table->string('hours');
             $table->timestamps();
-            
+
             $table->index(['funeral_home_id', 'day']);
         });
     }

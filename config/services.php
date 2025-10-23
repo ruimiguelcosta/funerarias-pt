@@ -39,4 +39,12 @@ return [
         'api_key' => env('OPENAI_API_KEY'),
     ],
 
+    'unsplash' => [
+        'access_key' => env('UNSPLASH_ACCESS_KEY'),
+    ],
+
+    'mapbox' => [
+        'api_key' => env('MAPBOX_API_KEY'),
+    ],
+
 ];

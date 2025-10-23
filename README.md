@@ -64,6 +64,12 @@ Este projeto foi criado extraindo toda a estrutura HTML e CSS do tema React orig
    php artisan key:generate
    ```
 
+   Adicione as seguintes variáveis no arquivo `.env`:
+   ```
+   OPENAI_API_KEY=your_openai_api_key
+   UNSPLASH_ACCESS_KEY=your_unsplash_access_key
+   ```
+
 3. **Compilar assets**:
    ```bash
    npm run dev
@@ -76,13 +82,42 @@ Este projeto foi criado extraindo toda a estrutura HTML e CSS do tema React orig
    php artisan serve
    ```
 
+## Comandos Artisan
+
+### Geração de Posts
+O sistema inclui um comando para gerar posts automaticamente usando ChatGPT e buscar imagens relacionadas no Unsplash:
+
+```bash
+# Gerar um post usando uma ideia aleatória não utilizada
+php artisan posts:generate
+
+# Gerar um post usando uma ideia específica
+php artisan posts:generate --idea-id=1
+```
+
+O comando realiza as seguintes ações:
+1. Busca uma ideia de post não utilizada (ou usa a ID especificada)
+2. Gera conteúdo completo usando ChatGPT (título, conteúdo HTML, meta tags)
+3. Busca e baixa uma imagem relacionada do Unsplash
+4. Adiciona um bloco HTML com 3 funerárias recomendadas ao final do conteúdo
+5. Gera automaticamente um slug único baseado no título
+6. Salva tudo no banco de dados
+7. Marca a ideia como utilizada
+
+As imagens são salvas em `storage/app/public/images/posts/` e incluem atribuição ao fotógrafo do Unsplash.
+
+Os posts são acessíveis via URL amigável: `/post/{slug}` (ex: `/post/como-planear-um-funeral`)
+
 ## Tecnologias Utilizadas
 
-- **Laravel 11+** - Framework PHP
+- **Laravel 12** - Framework PHP
+- **Filament 4** - Painel administrativo
 - **Blade** - Template engine
 - **Tailwind CSS** - Framework CSS
 - **Vite** - Build tool
 - **JavaScript Vanilla** - Interatividade
+- **OpenAI GPT-4** - Geração de conteúdo
+- **Unsplash API** - Banco de imagens
 
 ## Estrutura de Arquivos
 

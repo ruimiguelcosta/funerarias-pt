@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('reviews_count')->default(0);
             $table->decimal('total_score', 3, 1)->nullable();
             $table->timestamps();
-            
+
             $table->index(['funeral_home_id', 'title']);
         });
     }

@@ -2,19 +2,15 @@
 
 namespace App\Filament\Resources\FuneralHomes\Tables;
 
-use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\URL;
-use Filament\Support\Enums\IconSize;
 
 class FuneralHomesTable
 {
@@ -39,7 +35,6 @@ class FuneralHomesTable
                     ->searchable()
                     ->sortable(),
 
-
                 TextColumn::make('phone')
                     ->label('Telefone')
                     ->searchable()
@@ -62,8 +57,6 @@ class FuneralHomesTable
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
-
 
                 IconColumn::make('is_suggested')
                     ->label('Sugerida')
@@ -96,9 +89,9 @@ class FuneralHomesTable
                     ->action(function (Model $record, $livewire) {
                         $url = route('funeral-home-detail', [
                             'citySlug' => $record->city_slug,
-                            'funeralHomeSlug' => $record->slug
+                            'funeralHomeSlug' => $record->slug,
                         ]);
-                        
+
                         $livewire->js("navigator.clipboard.writeText('{$url}').then(() => { \$wire.dispatch('notify', { message: 'Link copiado!', type: 'success' }); })");
                     })
                     ->tooltip('Clique para copiar o link desta funerária'),
@@ -121,8 +114,6 @@ class FuneralHomesTable
                             ->sort()
                             ->toArray();
                     }),
-
-
 
                 TernaryFilter::make('is_suggested')
                     ->label('É Sugerida'),
