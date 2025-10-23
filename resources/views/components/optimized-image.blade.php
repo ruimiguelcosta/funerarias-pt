@@ -7,6 +7,16 @@
     'fallback' => 'https://images.unsplash.com/photo-1584907797015-7554cd315667?w=400&h=300&fit=crop'
 ])
 
+@php
+    // Dimensões baseadas no tamanho
+    $dimensions = match($size) {
+        'small' => ['width' => 300, 'height' => 200],
+        'medium' => ['width' => 600, 'height' => 400],
+        'large' => ['width' => 1200, 'height' => 800],
+        default => ['width' => 600, 'height' => 400]
+    };
+@endphp
+
 @if($image && $image instanceof \App\Models\Image)
     @if($image->local_path)
         <picture>
@@ -19,7 +29,10 @@
             <img 
                 src="{{ $image->local_url }}" 
                 alt="{{ $alt }}" 
-                class="{{ $class }}" 
+                width="{{ $dimensions['width'] }}"
+            height="{{ $dimensions['height'] }}"
+                width="{{ $dimensions['width'] }}"
+                height="{{ $dimensions['height'] }}"
                 @if($lazy) loading="lazy" decoding="async" @endif
             >
         </picture>
@@ -27,7 +40,8 @@
         <img 
             src="{{ $fallback }}" 
             alt="{{ $alt }}" 
-            class="{{ $class }}" 
+            width="{{ $dimensions['width'] }}"
+            height="{{ $dimensions['height'] }}" 
             @if($lazy) loading="lazy" decoding="async" @endif
         >
     @endif
@@ -46,7 +60,8 @@
             <img 
                 src="{{ $imageModel->local_url }}" 
                 alt="{{ $alt }}" 
-                class="{{ $class }}" 
+                width="{{ $dimensions['width'] }}"
+            height="{{ $dimensions['height'] }}" 
                 @if($lazy) loading="lazy" decoding="async" @endif
             >
         </picture>
@@ -54,7 +69,8 @@
         <img 
             src="{{ $image }}" 
             alt="{{ $alt }}" 
-            class="{{ $class }}" 
+            width="{{ $dimensions['width'] }}"
+            height="{{ $dimensions['height'] }}" 
             @if($lazy) loading="lazy" decoding="async" @endif
         >
     @endif

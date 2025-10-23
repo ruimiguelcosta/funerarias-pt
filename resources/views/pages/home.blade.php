@@ -10,6 +10,8 @@
                 src="{{ asset('images/home.jpg') }}" 
                 alt="Serviços funerários com dignidade e respeito"
                 class="absolute inset-0 w-full h-full object-cover"
+                width="1200"
+                height="800"
                 fetchpriority="high"
                 loading="eager"
                 decoding="async"

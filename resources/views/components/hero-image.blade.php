@@ -18,6 +18,14 @@
     
     $hasAvif = file_exists($avifPath);
     $hasWebp = file_exists($webpPath);
+    
+    // Dimensões baseadas no tamanho
+    $dimensions = match($size) {
+        'small' => ['width' => 300, 'height' => 200],
+        'medium' => ['width' => 600, 'height' => 400],
+        'large' => ['width' => 1200, 'height' => 800],
+        default => ['width' => 1200, 'height' => 800]
+    };
 @endphp
 
 @if($hasAvif || $hasWebp)
@@ -34,6 +42,8 @@
             src="{{ $src }}" 
             alt="{{ $alt }}" 
             class="{{ $class }}"
+            width="{{ $dimensions['width'] }}"
+            height="{{ $dimensions['height'] }}"
             @if($priority) fetchpriority="high" @endif
             loading="{{ $priority ? 'eager' : 'lazy' }}"
             decoding="async"
@@ -44,6 +54,8 @@
         src="{{ $src }}" 
         alt="{{ $alt }}" 
         class="{{ $class }}"
+        width="{{ $dimensions['width'] }}"
+        height="{{ $dimensions['height'] }}"
         @if($priority) fetchpriority="high" @endif
         loading="{{ $priority ? 'eager' : 'lazy' }}"
         decoding="async"

@@ -34,12 +34,14 @@ class SeoService
             'canonical' => $baseUrl,
             'og_title' => 'Serviços Funerários em Portugal - Dignidade e Respeito',
             'og_description' => 'Conectamos famílias com serviços funerários de qualidade e confiança em Portugal. Profissionalismo e compaixão em momentos difíceis.',
-            'og_image' => $baseUrl . '/images/og-home.jpg',
+            'og_image' => $baseUrl . '/images/home-large.webp',
+            'og_image:width' => '1200',
+            'og_image:height' => '800',
             'og_type' => 'website',
             'twitter_card' => 'summary_large_image',
             'twitter_title' => 'Serviços Funerários em Portugal - Dignidade e Respeito',
             'twitter_description' => 'Encontre as melhores funerárias em Portugal com serviços de qualidade e apoio compassivo.',
-            'twitter_image' => $baseUrl . '/images/twitter-home.jpg',
+            'twitter_image' => $baseUrl . '/images/home-large.webp',
         ];
     }
 
@@ -52,7 +54,9 @@ class SeoService
             'canonical' => $baseUrl . '/funerarias',
             'og_title' => 'Todas as Funerárias em Portugal - Lista Completa',
             'og_description' => 'Explore nossa lista completa de funerárias em Portugal. Compare serviços, avaliações e encontre a melhor opção para sua família.',
-            'og_image' => $baseUrl . '/images/og-funeral-homes.jpg',
+            'og_image' => $baseUrl . '/images/cruzes-large.webp',
+            'og_image:width' => '1200',
+            'og_image:height' => '800',
             'og_type' => 'website',
         ];
     }
@@ -92,7 +96,9 @@ class SeoService
             'canonical' => $baseUrl . '/quem-somos',
             'og_title' => 'Quem Somos - Plataforma de Serviços Funerários',
             'og_description' => 'Descubra nossa missão de proporcionar dignidade e respeito às famílias através de serviços funerários de qualidade.',
-            'og_image' => $baseUrl . '/images/og-about.jpg',
+            'og_image' => $baseUrl . '/images/cemiterio-large.webp',
+            'og_image:width' => '1200',
+            'og_image:height' => '800',
             'og_type' => 'website',
         ];
     }

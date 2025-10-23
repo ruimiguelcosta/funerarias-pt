@@ -21,8 +21,10 @@
 <meta property="og:url" content="{{ $metaTags['canonical'] }}">
 @if(isset($metaTags['og_image']))
 <meta property="og:image" content="{{ $metaTags['og_image'] }}">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image:width" content="{{ $metaTags['og_image:width'] ?? '1200' }}">
+<meta property="og:image:height" content="{{ $metaTags['og_image:height'] ?? '630' }}">
+<meta property="og:image:type" content="image/webp">
+<meta property="og:image:alt" content="{{ $metaTags['og_image:alt'] ?? $metaTags['og_title'] }}">
 @endif
 <meta property="og:site_name" content="Funerárias Portugal">
 <meta property="og:locale" content="pt_PT">
