@@ -55,16 +55,21 @@ class ImageOptimizationService
 
     private function createOptimizedVersions(string $originalPath, string $directory, string $filename): bool
     {
+        $image = $this->imageManager->read($originalPath);
+        $originalWidth = $image->width();
+        $originalHeight = $image->height();
+        $aspectRatio = $originalWidth / $originalHeight;
+
         $sizes = [
             'webp' => [
-                'small' => [300, 200],
-                'medium' => [600, 400],
-                'large' => [1200, 800],
+                'small' => $this->calculateDimensions(300, $aspectRatio),
+                'medium' => $this->calculateDimensions(600, $aspectRatio),
+                'large' => $this->calculateDimensions(1200, $aspectRatio),
             ],
             'avif' => [
-                'small' => [300, 200],
-                'medium' => [600, 400],
-                'large' => [1200, 800],
+                'small' => $this->calculateDimensions(300, $aspectRatio),
+                'medium' => $this->calculateDimensions(600, $aspectRatio),
+                'large' => $this->calculateDimensions(1200, $aspectRatio),
             ],
         ];
 
@@ -83,6 +88,14 @@ class ImageOptimizationService
         }
 
         return $success;
+    }
+
+    private function calculateDimensions(int $maxWidth, float $aspectRatio): array
+    {
+        $width = $maxWidth;
+        $height = round($maxWidth / $aspectRatio);
+        
+        return [$width, $height];
     }
 
     private function createResizedImage(string $originalPath, string $outputPath, int $width, int $height, string $format): bool

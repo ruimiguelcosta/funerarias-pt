@@ -9,10 +9,14 @@
     ]" />
 
     <!-- Hero Section -->
-    <div class="h-[400px] bg-cover bg-center relative"
-         style="background-image: url('{{ asset('images/cruzes.jpg') }}')">
-        <div class="absolute inset-0 bg-gradient-to-br from-purple-800/95 to-purple-600/20"></div>
-    </div>
+    <x-hero-image 
+        :src="asset('images/cruzes.jpg')"
+        alt="Todas as funerárias em Portugal"
+        class="h-[400px] w-full object-cover"
+        size="large"
+        :priority="true"
+    />
+    <div class="absolute inset-0 bg-gradient-to-br from-purple-800/95 to-purple-600/20"></div>
 
     <section class="py-16">
         <div class="container mx-auto px-4">

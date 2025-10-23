@@ -3,9 +3,18 @@
 @section('content')
 <div class="pt-20">
     <section class="relative min-h-[600px] flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0 bg-cover bg-center"
-             style="background-image: url('{{ asset('images/home.jpg') }}')">
-        </div>
+        <picture>
+            <source srcset="{{ asset('images/home-large.avif') }}" type="image/avif">
+            <source srcset="{{ asset('images/home-large.webp') }}" type="image/webp">
+            <img 
+                src="{{ asset('images/home.jpg') }}" 
+                alt="Serviços funerários com dignidade e respeito"
+                class="absolute inset-0 w-full h-full object-cover"
+                fetchpriority="high"
+                loading="eager"
+                decoding="async"
+            >
+        </picture>
         <div class="absolute inset-0 bg-gradient-to-br from-purple-800/95 to-purple-600/20"></div>
 
         <div class="container mx-auto px-4 relative z-10 text-center">
