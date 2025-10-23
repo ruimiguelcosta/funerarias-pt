@@ -10,7 +10,7 @@ class PostFuneralHomesBlockService
 
     public function generateHtmlBlock(): string
     {
-        $funeralHomes = $this->funeralHomeService->getRandomFuneralHomes(3);
+        $funeralHomes = $this->funeralHomeService->getRandomFuneralHomes(4);
 
         if ($funeralHomes->isEmpty()) {
             return '';

@@ -45,6 +45,8 @@ function requestGeolocationPermission() {
             localStorage.setItem('user-location', JSON.stringify(locationData));
             console.log('Localização guardada com sucesso:', locationData);
             
+            sendLocationToServer(locationData);
+            
             window.dispatchEvent(new CustomEvent('locationGranted', { 
                 detail: locationData 
             }));
@@ -61,6 +63,33 @@ function requestGeolocationPermission() {
             maximumAge: 0
         }
     );
+}
+
+async function sendLocationToServer(locationData) {
+    try {
+        const response = await fetch('/api/user-location', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                latitude: locationData.latitude,
+                longitude: locationData.longitude,
+                accuracy: locationData.accuracy
+            })
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Localização guardada no servidor:', data);
+        } else {
+            console.error('Erro ao guardar localização no servidor:', response.status);
+        }
+    } catch (error) {
+        console.error('Erro ao enviar localização para o servidor:', error);
+    }
 }
 
 window.getUserLocation = function() {

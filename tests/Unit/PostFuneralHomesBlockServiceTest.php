@@ -20,7 +20,7 @@ class PostFuneralHomesBlockServiceTest extends TestCase
         $this->service = app(PostFuneralHomesBlockService::class);
     }
 
-    public function test_generates_html_block_with_three_funeral_homes(): void
+    public function test_generates_html_block_with_four_funeral_homes(): void
     {
         FuneralHome::factory()->count(5)->create([
             'city_slug' => 'lisboa',

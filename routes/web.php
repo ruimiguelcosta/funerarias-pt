@@ -2,6 +2,7 @@
 
 use App\Actions\Http\Api\GetMapFuneralHomesAction;
 use App\Actions\Http\Api\GetNearbyFuneralHomesAction;
+use App\Actions\Http\Api\StoreUserLocationAction;
 use App\Actions\Http\GenerateSitemapAction;
 use App\Actions\Http\Pages\AboutPageAction;
 use App\Actions\Http\Pages\BlogPageAction;
@@ -23,6 +24,8 @@ Route::get('/', HomePageAction::class)->name('home');
 Route::get('/api/nearby-funeral-homes', GetNearbyFuneralHomesAction::class)->name('api.nearby-funeral-homes');
 
 Route::get('/api/map-funeral-homes', GetMapFuneralHomesAction::class)->name('api.map-funeral-homes');
+
+Route::post('/api/user-location', StoreUserLocationAction::class)->name('api.store-user-location');
 
 Route::get('/mapa-funerarias-proximas', NearbyMapPageAction::class)->name('nearby-map');
 
