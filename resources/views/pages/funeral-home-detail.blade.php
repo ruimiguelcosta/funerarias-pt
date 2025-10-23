@@ -9,13 +9,13 @@
         ['label' => $funeralHome->city, 'url' => route('city-funeral-homes', $funeralHome->city_slug)],
         ['label' => $funeralHome->title]
     ]" />
-    
+
     <!-- Hero Section -->
-    <div class="h-[400px] bg-cover bg-center relative" 
+    <div class="h-[400px] bg-cover bg-center relative"
          style="background-image: url('{{ $funeralHome->images->where('category', 'main')->first()?->local_url ?? $funeralHome->images->first()?->local_url ?? 'https://images.unsplash.com/photo-1584907797015-7554cd315667?w=800&h=400&fit=crop' }}')">
-        <div class="absolute inset-0 bg-gradient-to-br from-purple-800/95 to-purple-600/90"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-800/95 to-purple-600/30"></div>
     </div>
-    
+
     <section class="py-16">
         <div class="container mx-auto px-4">
             <div class="max-w-5xl mx-auto">
@@ -40,8 +40,7 @@
                     </div>
                     @endif
                 </div>
-                
-                <!-- Contact Information Card -->
+
                 <div class="bg-white rounded-lg border border-gray-200 mb-8 p-6">
                     <h2 class="font-playfair text-2xl text-purple-700 mb-4">
                         Informações de Contacto
@@ -62,7 +61,7 @@
                             </div>
                         </div>
                         @endif
-                        
+
                         @if($funeralHome->phone)
                         <div class="flex items-start gap-3">
                             <svg class="h-5 w-5 text-green-600 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,7 +73,7 @@
                             </div>
                         </div>
                         @endif
-                        
+
                         @if($funeralHome->website)
                         <div class="flex items-start gap-3">
                             <svg class="h-5 w-5 text-green-600 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,7 +85,7 @@
                             </div>
                         </div>
                         @endif
-                        
+
                         <div class="flex items-start gap-3">
                             <svg class="h-5 w-5 text-green-600 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -98,7 +97,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Funeral Home Description Card -->
                 @if($funeralHome->generated_description)
                 <div class="bg-white rounded-lg border border-gray-200 mb-8 p-6">
@@ -119,26 +118,26 @@
                     </h2>
                     <div class="prose prose-lg max-w-none">
                         <p class="text-gray-700 leading-relaxed mb-4">
-                            Esta funerária oferece serviços completos e personalizados para apoiar as famílias durante momentos difíceis. 
-                            Com uma equipa experiente e dedicada, garantimos que cada serviço seja realizado com o máximo respeito, 
+                            Esta funerária oferece serviços completos e personalizados para apoiar as famílias durante momentos difíceis.
+                            Com uma equipa experiente e dedicada, garantimos que cada serviço seja realizado com o máximo respeito,
                             dignidade e profissionalismo.
                         </p>
                         <p class="text-gray-700 leading-relaxed mb-4">
-                            Os nossos serviços incluem organização completa de cerimónias fúnebres, transporte, preparação e todos os 
-                            procedimentos necessários para honrar a memória dos seus entes queridos. Estamos comprometidos em 
+                            Os nossos serviços incluem organização completa de cerimónias fúnebres, transporte, preparação e todos os
+                            procedimentos necessários para honrar a memória dos seus entes queridos. Estamos comprometidos em
                             proporcionar conforto e apoio durante este período sensível.
                         </p>
                         <div class="bg-purple-50 border-l-4 border-purple-400 p-4 mt-6">
                             <p class="text-purple-800 font-medium mb-2">💙 Compromisso com a Excelência</p>
                             <p class="text-purple-700 text-sm">
-                                Trabalhamos com transparência, compaixão e atenção aos detalhes, 
+                                Trabalhamos com transparência, compaixão e atenção aos detalhes,
                                 garantindo que cada família receba o cuidado e respeito que merece.
                             </p>
                         </div>
                     </div>
                 </div>
                 @endif
-                
+
                 <!-- About Us Card -->
                 @if($funeralHome->description)
                 <div class="bg-white rounded-lg border border-gray-200 mb-12 p-6">
@@ -150,7 +149,7 @@
                     </p>
                 </div>
                 @endif
-                
+
                 <!-- Categories -->
                 @if($funeralHome->categories->count() > 0)
                 <div class="bg-white rounded-lg border border-gray-200 mb-12 p-6">
@@ -166,10 +165,10 @@
                     </div>
                 </div>
                 @endif
-                
+
                 <!-- Reviews Section -->
                 <x-reviews-section :reviews="$funeralHome->reviews" :funeral-home="$funeralHome" />
-                
+
                 <div class="mt-12 text-center">
                     <a href="tel:{{ $funeralHome->phone }}" class="bg-gradient-to-r from-purple-600 to-purple-500 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:opacity-90 transition-all duration-300 inline-block">
                         Contactar Agora

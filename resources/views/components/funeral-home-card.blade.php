@@ -5,7 +5,12 @@
         <div class="block cursor-not-allowed opacity-50">
     @endif
         <div class="h-48 overflow-hidden">
-            <img src="{{ $image }}" alt="{{ $name }}" class="w-full h-full object-cover hover:scale-105 transition-all duration-300">
+            <x-optimized-image 
+                :image="$image" 
+                :alt="$name" 
+                class="w-full h-full object-cover hover:scale-105 transition-all duration-300"
+                size="medium"
+            />
         </div>
     @if($city_slug)
         </a>

@@ -5,17 +5,20 @@ namespace App\Domain\FuneralHomes\Services;
 use App\Models\FuneralHome;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class FuneralHomeService
 {
     public function getFeaturedFuneralHomes(int $limit = 9): Collection
     {
-        return FuneralHome::query()
-            ->with(['images', 'categories'])
-            ->whereNotNull('city_slug')
-            ->inRandomOrder()
-            ->limit($limit)
-            ->get();
+        return Cache::remember('featured_funeral_homes', 86400, function () use ($limit) {
+            return FuneralHome::query()
+                ->with(['images', 'categories'])
+                ->whereNotNull('city_slug')
+                ->inRandomOrder()
+                ->limit($limit)
+                ->get();
+        });
     }
 
     public function paginateFuneralHomes(int $perPage = 12): LengthAwarePaginator

@@ -37,6 +37,9 @@ class ImageDownloadService
                 'downloaded_at' => now(),
             ]);
 
+            $optimizationService = app(ImageOptimizationService::class);
+            $optimizationService->optimizeImage($image);
+
             return true;
         } catch (\Exception $e) {
             return false;

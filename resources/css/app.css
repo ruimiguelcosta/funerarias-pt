@@ -38,7 +38,8 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Playfair Display', 'Times New Roman', Times, serif;
+    font-display: swap;
   }
 }
 
@@ -72,7 +73,8 @@
   }
 
   .font-playfair {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Playfair Display', 'Times New Roman', Times, serif;
+    font-display: swap;
   }
 
   @keyframes fade-in {

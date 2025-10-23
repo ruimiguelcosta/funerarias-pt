@@ -8,9 +8,11 @@
     "require": {
         "php": "^8.2",
         "filament/filament": "^4.1",
+        "intervention/image": "^3.11",
         "laravel/framework": "^12.0",
         "laravel/horizon": "^5.37",
         "laravel/tinker": "^2.10.1",
+        "spatie/image-optimizer": "^1.8",
         "spatie/laravel-data": "^4.18",
         "spatie/laravel-sitemap": "^7.3",
         "spatie/laravel-sluggable": "^3.7"

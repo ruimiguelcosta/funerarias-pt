@@ -36,6 +36,53 @@ class Image extends Model
 
     public function getLocalUrlAttribute(): ?string
     {
-        return $this->local_path ? asset('storage/' . $this->local_path) : null;
+        return $this->local_path ? asset('storage/'.$this->local_path) : null;
+    }
+
+    public function getOptimizedUrlAttribute(): ?string
+    {
+        if (! $this->local_path) {
+            return null;
+        }
+
+        $originalPath = storage_path('app/public/'.$this->local_path);
+        $service = app(\App\Services\ImageOptimizationService::class);
+
+        return $service->getOptimizedImageUrl($originalPath, 'medium', 'webp');
+    }
+
+    public function getSmallUrlAttribute(): ?string
+    {
+        if (! $this->local_path) {
+            return null;
+        }
+
+        $originalPath = storage_path('app/public/'.$this->local_path);
+        $service = app(\App\Services\ImageOptimizationService::class);
+
+        return $service->getOptimizedImageUrl($originalPath, 'small', 'webp');
+    }
+
+    public function getLargeUrlAttribute(): ?string
+    {
+        if (! $this->local_path) {
+            return null;
+        }
+
+        $originalPath = storage_path('app/public/'.$this->local_path);
+        $service = app(\App\Services\ImageOptimizationService::class);
+
+        return $service->getOptimizedImageUrl($originalPath, 'large', 'webp');
+    }
+
+    public static function findByUrl(string $url): ?self
+    {
+        if (str_contains($url, 'storage/images/funeral-homes/')) {
+            $imagePath = str_replace(asset('storage/'), '', $url);
+
+            return self::query()->where('local_path', $imagePath)->first();
+        }
+
+        return null;
     }
 }

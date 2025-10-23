@@ -8,10 +8,17 @@
     <!-- SEO Meta Tags -->
     <x-seo-meta-tags :page="$seoPage ?? 'home'" :data="$seoData ?? []" />
     
-    <!-- Fonts -->
+    <!-- Fonts Optimization -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Preload critical font weights -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap"></noscript>
+    
+    <!-- Load non-critical font weights asynchronously -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap"></noscript>
     
     <!-- Tailwind CSS -->
     @vite(['resources/css/app.css'])
@@ -116,7 +123,8 @@
         }
 
         .font-playfair {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Playfair Display', 'Times New Roman', Times, serif;
+            font-display: swap;
         }
 
         @keyframes fade-in {

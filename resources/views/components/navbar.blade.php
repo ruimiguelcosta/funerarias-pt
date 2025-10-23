@@ -1,7 +1,11 @@
 <nav class="fixed top-0 w-full backdrop-blur-sm border-b z-50 shadow-sm" style="background-color: #D6C7DF; border-bottom-color: #B8A5C7;">
     <div class="container mx-auto px-4 h-20 flex items-center justify-between">
         <a href="{{ route('home') }}" class="flex items-center gap-3 transition-all duration-300 hover:opacity-80">
-            <img src="{{ asset('images/logo.png') }}?v={{ time() }}" alt="Logo" class="h-12 w-auto object-contain">
+            <x-optimized-logo 
+                alt="Logo" 
+                class="h-12 w-auto object-contain"
+                size="small"
+            />
         </a>
 
         <div class="hidden md:flex items-center gap-8">
