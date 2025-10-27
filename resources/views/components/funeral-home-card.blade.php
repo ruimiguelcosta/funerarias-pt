@@ -1,6 +1,6 @@
 <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-gray-200 flex flex-col h-full">
     @if($city_slug)
-        <a href="{{ route('funeral-home-detail', ['citySlug' => $city_slug, 'funeralHomeSlug' => $slug]) }}" class="block">
+        <a href="{{ route('entity-detail', ['citySlug' => $city_slug, 'entitySlug' => $slug]) }}" class="block">
     @else
         <div class="block cursor-not-allowed opacity-50">
     @endif
@@ -20,7 +20,7 @@
     <div class="p-6 flex flex-col flex-grow">
         <div class="flex justify-between items-start mb-3">
             @if($city_slug)
-                <a href="{{ route('funeral-home-detail', ['citySlug' => $city_slug, 'funeralHomeSlug' => $slug]) }}" class="hover:text-purple-800 transition-colors duration-200">
+                <a href="{{ route('entity-detail', ['citySlug' => $city_slug, 'entitySlug' => $slug]) }}" class="hover:text-purple-800 transition-colors duration-200">
                     <h3 class="font-playfair text-xl text-purple-700 leading-tight">{{ $name }}</h3>
                 </a>
             @else
@@ -82,7 +82,7 @@
         
         <div class="mt-auto">
             @if($city_slug)
-                <a href="{{ route('funeral-home-detail', ['citySlug' => $city_slug, 'funeralHomeSlug' => $slug]) }}">
+                <a href="{{ route('entity-detail', ['citySlug' => $city_slug, 'entitySlug' => $slug]) }}">
                     <button class="w-full bg-gradient-to-r from-purple-600 to-purple-500 text-white py-3 rounded-lg font-medium hover:opacity-90 transition-all duration-300">
                         Ver Detalhes
                     </button>

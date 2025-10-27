@@ -2,17 +2,17 @@
 
 namespace Tests\Feature\Reviews;
 
-use App\Models\FuneralHome;
+use App\Models\Entity;
 use Tests\TestCase;
 
 class StoreReviewTest extends TestCase
 {
     public function test_stores_a_review_successfully(): void
     {
-        $funeralHome = FuneralHome::factory()->create();
+        $entity = Entity::factory()->create();
 
         $payload = [
-            'funeral_home_id' => $funeralHome->id,
+            'entity_id' => $entity->id,
             'rating' => 5,
             'author_name' => 'João Silva',
             'comment' => 'Excelente serviço, muito profissional.',
@@ -22,7 +22,7 @@ class StoreReviewTest extends TestCase
             ->assertRedirect();
 
         $this->assertDatabaseHas('reviews', [
-            'funeral_home_id' => $funeralHome->id,
+            'entity_id' => $entity->id,
             'rating' => 5,
             'author_name' => 'João Silva',
             'text' => 'Excelente serviço, muito profissional.',
@@ -33,13 +33,13 @@ class StoreReviewTest extends TestCase
     {
         $this->postJson('/reviews', [])
             ->assertStatus(422)
-            ->assertJsonValidationErrors(['funeral_home_id', 'rating', 'author_name', 'comment']);
+            ->assertJsonValidationErrors(['entity_id', 'rating', 'author_name', 'comment']);
     }
 
     public function test_validates_funeral_home_exists(): void
     {
         $payload = [
-            'funeral_home_id' => 999,
+            'entity_id' => 999,
             'rating' => 5,
             'author_name' => 'João Silva',
             'comment' => 'Excelente serviço.',
@@ -47,15 +47,15 @@ class StoreReviewTest extends TestCase
 
         $this->postJson('/reviews', $payload)
             ->assertStatus(422)
-            ->assertJsonValidationErrors(['funeral_home_id']);
+            ->assertJsonValidationErrors(['entity_id']);
     }
 
     public function test_validates_rating_range(): void
     {
-        $funeralHome = FuneralHome::factory()->create();
+        $entity = Entity::factory()->create();
 
         $payload = [
-            'funeral_home_id' => $funeralHome->id,
+            'entity_id' => $entity->id,
             'rating' => 6,
             'author_name' => 'João Silva',
             'comment' => 'Excelente serviço.',
@@ -68,10 +68,10 @@ class StoreReviewTest extends TestCase
 
     public function test_updates_funeral_home_statistics_after_review(): void
     {
-        $funeralHome = FuneralHome::factory()->create(['reviews_count' => 0, 'total_score' => 0]);
+        $entity = Entity::factory()->create(['reviews_count' => 0, 'total_score' => 0]);
 
         $payload = [
-            'funeral_home_id' => $funeralHome->id,
+            'entity_id' => $entity->id,
             'rating' => 4,
             'author_name' => 'João Silva',
             'comment' => 'Bom serviço.',
@@ -79,8 +79,8 @@ class StoreReviewTest extends TestCase
 
         $this->postJson('/reviews', $payload);
 
-        $funeralHome->refresh();
-        $this->assertEquals(1, $funeralHome->reviews_count);
-        $this->assertEquals(4.0, $funeralHome->total_score);
+        $entity->refresh();
+        $this->assertEquals(1, $entity->reviews_count);
+        $this->assertEquals(4.0, $entity->total_score);
     }
 }

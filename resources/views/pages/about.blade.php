@@ -7,14 +7,16 @@
         ['label' => 'Quem Somos']
     ]" />
 
-    <x-hero-image 
-        :src="asset('images/cemiterio.jpg')"
-        alt="Quem somos - Plataforma de serviços funerários"
-        class="h-[400px] w-full object-cover"
-        size="large"
-        :priority="true"
-    />
-    <div class="absolute inset-0 bg-gradient-to-br from-purple-800/60 to-purple-600/20"></div>
+    <div class="relative">
+        <x-hero-image 
+            :src="asset('images/cemiterio.jpg')"
+            alt="Quem somos - Plataforma de serviços funerários"
+            class="h-[400px] w-full object-cover"
+            size="large"
+            :priority="true"
+        />
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-800/60 to-purple-600/20"></div>
+    </div>
 
     <section class="py-16">
         <div class="container mx-auto px-4">

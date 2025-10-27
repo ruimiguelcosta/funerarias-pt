@@ -2,13 +2,13 @@
 
 namespace App\Actions\Http\Pages;
 
-use App\Domain\FuneralHomes\Services\FuneralHomeService;
+use App\Domain\FuneralHomes\Services\EntityService;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class CityFuneralHomesPageAction
 {
-    public function __construct(private FuneralHomeService $service) {}
+    public function __construct(private EntityService $service) {}
 
     public function __invoke(string $citySlug): View|Response
     {
@@ -18,11 +18,11 @@ class CityFuneralHomesPageAction
             abort(404);
         }
 
-        $funeralHomes = $this->service->getFuneralHomesByCity($citySlug);
+        $entities = $this->service->getEntitiesByCity($citySlug);
 
         return view('pages.city-funeral-homes', [
             'city' => $city,
-            'funeralHomes' => $funeralHomes,
+            'entities' => $entities,
             'seoPage' => 'city-funeral-homes',
             'seoData' => ['city' => $city],
         ]);

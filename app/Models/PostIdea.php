@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 class PostIdea extends Model
 {
-    use HasFactory, HasSlug;
+    use BelongsToTenant, HasFactory, HasSlug;
 
     protected $fillable = [
+        'tenant_id',
         'title',
         'slug',
         'description',
@@ -59,5 +62,10 @@ class PostIdea extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function tenant(): BelongsTo
+    {
+        return $this->belongsTo(Tenant::class);
     }
 }

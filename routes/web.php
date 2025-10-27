@@ -52,6 +52,6 @@ Route::get('/sitemap.xml', GenerateSitemapAction::class)->name('sitemap');
 
 Route::get('/{citySlug}', CityFuneralHomesPageAction::class)->name('city-funeral-homes');
 
-Route::get('/{citySlug}/{funeralHomeSlug}', FuneralHomeDetailPageAction::class)->name('funeral-home-detail');
+Route::get('/{citySlug}/{entitySlug}', FuneralHomeDetailPageAction::class)->name('entity-detail');
 
 Route::fallback(NotFoundPageAction::class);

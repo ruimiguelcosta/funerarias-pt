@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Domain\PostIdeas\Services\PostIdeaService;
 use App\Models\PostIdea;
 use App\Services\ChatGPTService;
-use App\Services\PostFuneralHomesBlockService;
+use App\Services\PostEntitiesBlockService;
 use App\Services\UnsplashService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -20,7 +20,7 @@ class GeneratePostCommand extends Command
         private PostIdeaService $postIdeaService,
         private ChatGPTService $chatGPTService,
         private UnsplashService $unsplashService,
-        private PostFuneralHomesBlockService $funeralHomesBlockService
+        private PostEntitiesBlockService $entitiesBlockService
     ) {
         parent::__construct();
     }
@@ -59,8 +59,8 @@ class GeneratePostCommand extends Command
             }
 
             $this->info('🏢 Adicionando bloco de funerárias recomendadas...');
-            $funeralHomesBlock = $this->funeralHomesBlockService->generateHtmlBlock();
-            $fullContent = $content['content'].$funeralHomesBlock;
+            $entitiesBlock = $this->entitiesBlockService->generateHtmlBlock();
+            $fullContent = $content['content'].$entitiesBlock;
 
             $updateData = [
                 'description' => $fullContent,

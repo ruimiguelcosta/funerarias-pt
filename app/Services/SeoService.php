@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\FuneralHome;
+use App\Models\Entity;
 use Illuminate\Support\Str;
 
 class SeoService
@@ -14,8 +14,8 @@ class SeoService
 
         return match ($page) {
             'home' => $this->getHomeMetaTags($baseUrl, $siteName),
-            'funeral-homes' => $this->getFuneralHomesMetaTags($baseUrl, $siteName),
-            'funeral-home-detail' => $this->getFuneralHomeDetailMetaTags($data['funeralHome'], $baseUrl, $siteName),
+            'funeral-homes' => $this->getEntitysMetaTags($baseUrl, $siteName),
+            'funeral-home-detail' => $this->getEntityDetailMetaTags($data['entity'], $baseUrl, $siteName),
             'about' => $this->getAboutMetaTags($baseUrl, $siteName),
             'blog-post' => $this->getBlogPostMetaTags($data, $baseUrl, $siteName),
             'privacy-policy' => $this->getPrivacyPolicyMetaTags($baseUrl, $siteName),
@@ -45,7 +45,7 @@ class SeoService
         ];
     }
 
-    private function getFuneralHomesMetaTags(string $baseUrl, string $siteName): array
+    private function getEntitysMetaTags(string $baseUrl, string $siteName): array
     {
         return [
             'title' => 'Todas as Funerárias em Portugal - Lista Completa | Funerárias Portugal',
@@ -61,29 +61,29 @@ class SeoService
         ];
     }
 
-    private function getFuneralHomeDetailMetaTags(FuneralHome $funeralHome, string $baseUrl, string $siteName): array
+    private function getEntityDetailMetaTags(Entity $entity, string $baseUrl, string $siteName): array
     {
-        $title = $funeralHome->title.' - '.$funeralHome->city.' | Funerárias Portugal';
-        $description = $funeralHome->description ?
-            Str::limit($funeralHome->description, 155) :
-            'Serviços funerários profissionais em '.$funeralHome->city.'. Dignidade e respeito em momentos difíceis.';
+        $title = $entity->title.' - '.$entity->city.' | Funerárias Portugal';
+        $description = $entity->description ?
+            Str::limit($entity->description, 155) :
+            'Serviços funerários profissionais em '.$entity->city.'. Dignidade e respeito em momentos difíceis.';
 
         return [
             'title' => $title,
             'description' => $description,
-            'keywords' => 'funerária '.$funeralHome->city.', '.$funeralHome->title.', serviços funerários '.$funeralHome->city.', funeral '.$funeralHome->city,
-            'canonical' => $baseUrl.'/funeraria/'.$funeralHome->slug,
+            'keywords' => 'funerária '.$entity->city.', '.$entity->title.', serviços funerários '.$entity->city.', funeral '.$entity->city,
+            'canonical' => $baseUrl.'/funeraria/'.$entity->slug,
             'og_title' => $title,
             'og_description' => $description,
-            'og_image' => $funeralHome->images->where('category', 'main')->first()?->local_url ?? $baseUrl.'/images/default-funeral-home.jpg',
+            'og_image' => $entity->images->where('category', 'main')->first()?->local_url ?? $baseUrl.'/images/default-funeral-home.jpg',
             'og_type' => 'business.business',
-            'og_latitude' => $funeralHome->latitude,
-            'og_longitude' => $funeralHome->longitude,
-            'og_street_address' => $funeralHome->address,
-            'og_locality' => $funeralHome->city,
-            'og_postal_code' => $funeralHome->postal_code,
+            'og_latitude' => $entity->latitude,
+            'og_longitude' => $entity->longitude,
+            'og_street_address' => $entity->address,
+            'og_locality' => $entity->city,
+            'og_postal_code' => $entity->postal_code,
             'og_country_name' => 'Portugal',
-            'og_phone_number' => $funeralHome->phone,
+            'og_phone_number' => $entity->phone,
         ];
     }
 
@@ -174,7 +174,7 @@ class SeoService
     {
         return match ($page) {
             'home' => $this->getHomeJsonLd(),
-            'funeral-home-detail' => $this->getFuneralHomeDetailJsonLd($data['funeralHome']),
+            'funeral-home-detail' => $this->getEntityDetailJsonLd($data['entity']),
             'about' => $this->getAboutJsonLd(),
             'blog-post' => $this->getBlogPostJsonLd($data),
             default => []
@@ -239,56 +239,56 @@ class SeoService
         ];
     }
 
-    private function getFuneralHomeDetailJsonLd(FuneralHome $funeralHome): array
+    private function getEntityDetailJsonLd(Entity $entity): array
     {
         $baseUrl = config('app.url');
 
         $jsonLd = [
             '@context' => 'https://schema.org',
-            '@type' => 'FuneralHome',
-            'name' => $funeralHome->title,
-            'description' => $funeralHome->description,
-            'url' => $baseUrl.'/funeraria/'.$funeralHome->slug,
-            'telephone' => $funeralHome->phone,
+            '@type' => 'Entity',
+            'name' => $entity->title,
+            'description' => $entity->description,
+            'url' => $baseUrl.'/funeraria/'.$entity->slug,
+            'telephone' => $entity->phone,
             'address' => [
                 '@type' => 'PostalAddress',
-                'streetAddress' => $funeralHome->address,
-                'addressLocality' => $funeralHome->city,
-                'postalCode' => $funeralHome->postal_code,
+                'streetAddress' => $entity->address,
+                'addressLocality' => $entity->city,
+                'postalCode' => $entity->postal_code,
                 'addressCountry' => 'PT',
             ],
             'geo' => [
                 '@type' => 'GeoCoordinates',
-                'latitude' => $funeralHome->latitude,
-                'longitude' => $funeralHome->longitude,
+                'latitude' => $entity->latitude,
+                'longitude' => $entity->longitude,
             ],
-            'openingHoursSpecification' => $this->getOpeningHoursJsonLd($funeralHome),
-            'aggregateRating' => $funeralHome->total_score ? [
+            'openingHoursSpecification' => $this->getOpeningHoursJsonLd($entity),
+            'aggregateRating' => $entity->total_score ? [
                 '@type' => 'AggregateRating',
-                'ratingValue' => $funeralHome->total_score,
-                'reviewCount' => $funeralHome->reviews_count ?? 0,
+                'ratingValue' => $entity->total_score,
+                'reviewCount' => $entity->reviews_count ?? 0,
                 'bestRating' => 5,
                 'worstRating' => 1,
             ] : null,
-            'image' => $funeralHome->images->where('category', 'main')->first()?->local_url ??
-                      $funeralHome->images->first()?->local_url,
-            'priceRange' => $funeralHome->price ? '€€' : null,
+            'image' => $entity->images->where('category', 'main')->first()?->local_url ??
+                      $entity->images->first()?->local_url,
+            'priceRange' => $entity->price ? '€€' : null,
             'paymentAccepted' => ['Cash', 'Credit Card', 'Bank Transfer'],
             'currenciesAccepted' => 'EUR',
         ];
 
-        if ($funeralHome->website) {
-            $jsonLd['sameAs'] = [$funeralHome->website];
+        if ($entity->website) {
+            $jsonLd['sameAs'] = [$entity->website];
         }
 
         return array_filter([$jsonLd]);
     }
 
-    private function getOpeningHoursJsonLd(FuneralHome $funeralHome): array
+    private function getOpeningHoursJsonLd(Entity $entity): array
     {
         $openingHours = [];
 
-        foreach ($funeralHome->openingHours as $hour) {
+        foreach ($entity->openingHours as $hour) {
             $openingHours[] = [
                 '@type' => 'OpeningHoursSpecification',
                 'dayOfWeek' => $hour->day_of_week,

@@ -11,7 +11,7 @@ class Review extends Model
     use HasFactory;
 
     protected $fillable = [
-        'funeral_home_id',
+        'entity_id',
         'author_name',
         'author_photo_url',
         'rating',
@@ -20,7 +20,6 @@ class Review extends Model
         'review_id',
     ];
 
-    // Accessor para compatibilidade com o componente
     public function getCommentAttribute()
     {
         return $this->text;
@@ -30,8 +29,8 @@ class Review extends Model
         'published_at' => 'datetime',
     ];
 
-    public function funeralHome(): BelongsTo
+    public function entity(): BelongsTo
     {
-        return $this->belongsTo(FuneralHome::class);
+        return $this->belongsTo(Entity::class);
     }
 }

@@ -11,13 +11,13 @@ class OpeningHour extends Model
     use HasFactory;
 
     protected $fillable = [
-        'funeral_home_id',
+        'entity_id',
         'day',
         'hours',
     ];
 
-    public function funeralHome(): BelongsTo
+    public function entity(): BelongsTo
     {
-        return $this->belongsTo(FuneralHome::class);
+        return $this->belongsTo(Entity::class);
     }
 }

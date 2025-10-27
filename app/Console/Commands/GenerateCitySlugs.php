@@ -2,31 +2,31 @@
 
 namespace App\Console\Commands;
 
-use App\Models\FuneralHome;
+use App\Models\Entity;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
 class GenerateCitySlugs extends Command
 {
-    protected $signature = 'funeral-homes:generate-city-slugs';
+    protected $signature = 'entities:generate-city-slugs';
 
-    protected $description = 'Generate city slugs for all funeral homes';
+    protected $description = 'Generate city slugs for all entities';
 
     public function handle(): int
     {
-        $this->info('Generating city slugs for funeral homes...');
+        $this->info('Generating city slugs for entities...');
 
-        $funeralHomes = FuneralHome::query()
+        $entities = Entity::query()
             ->whereNull('city_slug')
             ->whereNotNull('city')
             ->get();
 
-        $bar = $this->output->createProgressBar($funeralHomes->count());
+        $bar = $this->output->createProgressBar($entities->count());
         $bar->start();
 
-        foreach ($funeralHomes as $funeralHome) {
-            $citySlug = Str::slug($funeralHome->city);
-            $funeralHome->update(['city_slug' => $citySlug]);
+        foreach ($entities as $entity) {
+            $citySlug = Str::slug($entity->city);
+            $entity->update(['city_slug' => $citySlug]);
             $bar->advance();
         }
 

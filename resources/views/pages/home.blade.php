@@ -6,8 +6,8 @@
         <picture>
             <source srcset="{{ asset('images/home-large.avif') }}" type="image/avif">
             <source srcset="{{ asset('images/home-large.webp') }}" type="image/webp">
-            <img 
-                src="{{ asset('images/home.jpg') }}" 
+            <img
+                src="{{ asset('images/home.jpg') }}"
                 alt="Serviços funerários com dignidade e respeito"
                 class="absolute inset-0 w-full h-full object-cover"
                 width="1200"
@@ -97,23 +97,23 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @forelse($featuredFuneralHomes as $funeralHome)
+                @forelse($featuredEntities as $entity)
                     @include('components.funeral-home-card', [
-                        'id' => $funeralHome->id,
-                        'name' => $funeralHome->title,
-                        'slug' => $funeralHome->slug,
-                        'city_slug' => $funeralHome->city_slug,
-                        'city' => $funeralHome->city,
-                        'country_code' => $funeralHome->country_code,
-                        'location' => $funeralHome->city ? $funeralHome->city . ', ' . $funeralHome->country_code : 'Portugal',
-                        'phone' => $funeralHome->phone,
-                        'rating' => $funeralHome->total_score,
-                        'description' => $funeralHome->description ? Str::limit($funeralHome->description, 120) : 'Serviços funerários com tradição e respeito.',
-                        'image' => $funeralHome->images->where('category', 'main')->first()?->local_url ??
-                                  $funeralHome->images->first()?->local_url ??
+                        'id' => $entity->id,
+                        'name' => $entity->title,
+                        'slug' => $entity->slug,
+                        'city_slug' => $entity->city_slug,
+                        'city' => $entity->city,
+                        'country_code' => $entity->country_code,
+                        'location' => $entity->city ? $entity->city . ', ' . $entity->country_code : 'Portugal',
+                        'phone' => $entity->phone,
+                        'rating' => $entity->total_score,
+                        'description' => $entity->description ? Str::limit($entity->description, 120) : 'Serviços funerários com tradição e respeito.',
+                        'image' => $entity->images->where('category', 'main')->first()?->local_url ??
+                                  $entity->images->first()?->local_url ??
                                   'https://images.unsplash.com/photo-1584907797015-7554cd315667?w=400&h=300&fit=crop',
-                        'categories' => $funeralHome->categories->pluck('name')->toArray(),
-                        'reviews_count' => $funeralHome->reviews_count
+                        'categories' => $entity->categories->pluck('name')->toArray(),
+                        'reviews_count' => $entity->reviews_count
                     ])
                 @empty
                     <div class="col-span-full text-center py-12">
@@ -227,35 +227,15 @@
     @endif
 
     <!-- FAQ Section -->
+    @if($faqs->isNotEmpty())
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto">
                 <h2 class="font-playfair text-4xl md:text-5xl font-bold text-purple-700 text-center mb-12">
-                    Perguntas Frequentes
+                    {{ site_setting('faq.title', 'Perguntas Frequentes') }}
                 </h2>
 
-                <x-faq-section :faqs="[
-                    [
-                        'question' => 'Como escolher a melhor funerária?',
-                        'answer' => 'Recomendamos verificar a reputação da funerária, ler avaliações de outros clientes, comparar preços e serviços oferecidos, e garantir que possuem todas as licenças necessárias. A nossa plataforma facilita esta comparação.'
-                    ],
-                    [
-                        'question' => 'Quais serviços estão incluídos num funeral?',
-                        'answer' => 'Os serviços básicos incluem transporte do corpo, preparação, velório, cerimónia e enterro ou cremação. Serviços adicionais podem incluir flores, música, catering e documentação legal.'
-                    ],
-                    [
-                        'question' => 'Posso planear um funeral antecipadamente?',
-                        'answer' => 'Sim, é possível e recomendado planear um funeral antecipadamente. Isto permite tomar decisões com calma e pode reduzir custos. Muitas funerárias oferecem planos de pré-pagamento.'
-                    ],
-                    [
-                        'question' => 'Quanto custa um funeral em Portugal?',
-                        'answer' => 'Os custos variam consoante os serviços escolhidos e a região. Um funeral básico pode custar entre 1.500€ a 3.000€, enquanto serviços mais completos podem custar 5.000€ ou mais.'
-                    ],
-                    [
-                        'question' => 'Que documentos são necessários para um funeral?',
-                        'answer' => 'São necessários o certificado de óbito, cartão de cidadão do falecido, comprovativo de residência e documentos de identificação dos familiares responsáveis pelo funeral.'
-                    ]
-                ]" />
+                <x-faq-section :faqs="$faqs" />
             </div>
         </div>
     </section>
@@ -309,4 +289,5 @@
         </div>
     </section>
 </div>
+@endif
 @endsection

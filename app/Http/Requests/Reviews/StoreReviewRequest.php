@@ -14,7 +14,7 @@ class StoreReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'funeral_home_id' => ['required', 'integer', 'exists:funeral_homes,id'],
+            'entity_id' => ['required', 'integer', 'exists:funeral_homes,id'],
             'rating' => ['required', 'integer', 'min:1', 'max:5'],
             'author_name' => ['required', 'string', 'max:255'],
             'comment' => ['required', 'string', 'max:1000'],
@@ -24,8 +24,8 @@ class StoreReviewRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'funeral_home_id.required' => 'A funerária é obrigatória.',
-            'funeral_home_id.exists' => 'A funerária selecionada não existe.',
+            'entity_id.required' => 'A funerária é obrigatória.',
+            'entity_id.exists' => 'A funerária selecionada não existe.',
             'rating.required' => 'A avaliação é obrigatória.',
             'rating.min' => 'A avaliação deve ser pelo menos 1 estrela.',
             'rating.max' => 'A avaliação deve ser no máximo 5 estrelas.',

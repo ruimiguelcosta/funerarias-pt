@@ -1,4 +1,4 @@
-@props(['reviews' => [], 'funeralHome' => null])
+@props(['reviews' => [], 'entity' => null])
 
 <!-- Review Form -->
 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
@@ -12,7 +12,7 @@
     
     <form action="{{ route('reviews.store') }}" method="POST" class="space-y-4">
         @csrf
-        <input type="hidden" name="funeral_home_id" value="{{ $funeralHome->id }}">
+        <input type="hidden" name="entity_id" value="{{ $entity->id }}">
         
         <!-- Rating -->
         <div>
@@ -115,16 +115,16 @@
 </div>
 
 <!-- JSON-LD Reviews Schema -->
-@if($funeralHome)
+@if($entity)
 <script type="application/ld+json">
 {!! json_encode([
     '@context' => 'https://schema.org',
     '@type' => 'FuneralHome',
-    'name' => $funeralHome->title,
-    'aggregateRating' => $funeralHome->total_score ? [
+    'name' => $entity->title,
+    'aggregateRating' => $entity->total_score ? [
         '@type' => 'AggregateRating',
-        'ratingValue' => $funeralHome->total_score,
-        'reviewCount' => $funeralHome->reviews_count ?? 0,
+        'ratingValue' => $entity->total_score,
+        'reviewCount' => $entity->reviews_count ?? 0,
         'bestRating' => 5,
         'worstRating' => 1
     ] : null,

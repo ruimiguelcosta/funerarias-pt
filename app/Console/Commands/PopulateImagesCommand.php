@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\FuneralHome;
+use App\Models\Entity;
 use App\Models\Image;
 use Illuminate\Console\Command;
 
@@ -10,14 +10,14 @@ class PopulateImagesCommand extends Command
 {
     protected $signature = 'images:populate {--limit=}';
 
-    protected $description = 'Populate images table from funeral homes image_url field';
+    protected $description = 'Populate images table from entities image_url field';
 
     public function handle(): int
     {
         $this->info('Starting image population process...');
 
         $limit = $this->option('limit');
-        $query = FuneralHome::query()
+        $query = Entity::query()
             ->whereNotNull('image_url')
             ->where('image_url', '!=', '');
 
@@ -25,13 +25,13 @@ class PopulateImagesCommand extends Command
             $query->limit((int) $limit);
         }
 
-        $funeralHomes = $query->get();
-        $total = $funeralHomes->count();
+        $entities = $query->get();
+        $total = $entities->count();
 
-        $this->info("Found {$total} funeral homes with image URLs.");
+        $this->info("Found {$total} entities with image URLs.");
 
         if ($total === 0) {
-            $this->warn('No funeral homes with image URLs found.');
+            $this->warn('No entities with image URLs found.');
 
             return Command::SUCCESS;
         }
@@ -42,19 +42,19 @@ class PopulateImagesCommand extends Command
         $progressBar = $this->output->createProgressBar($total);
         $progressBar->start();
 
-        foreach ($funeralHomes as $funeralHome) {
+        foreach ($entities as $entity) {
             // Verificar se já existe uma imagem para esta funerária
             $existingImage = Image::query()
-                ->where('funeral_home_id', $funeralHome->id)
-                ->where('original_url', $funeralHome->image_url)
+                ->where('entity_id', $entity->id)
+                ->where('original_url', $entity->image_url)
                 ->first();
 
             if ($existingImage) {
                 $skipped++;
             } else {
                 Image::create([
-                    'funeral_home_id' => $funeralHome->id,
-                    'original_url' => $funeralHome->image_url,
+                    'entity_id' => $entity->id,
+                    'original_url' => $entity->image_url,
                     'category' => 'main',
                     'is_downloaded' => false,
                     'local_path' => null,

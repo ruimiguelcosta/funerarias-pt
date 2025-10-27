@@ -80,7 +80,7 @@ class ImageDownloadService
     private function generateFilename(Image $image, Response $response): string
     {
         $extension = $this->getExtensionFromMimeType($response->header('Content-Type'));
-        $slug = $image->funeralHome ? Str::slug($image->funeralHome->title) : 'image';
+        $slug = $image->entity ? Str::slug($image->entity->title) : 'image';
 
         return "{$slug}-{$image->id}.{$extension}";
     }

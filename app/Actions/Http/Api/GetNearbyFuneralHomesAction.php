@@ -2,13 +2,13 @@
 
 namespace App\Actions\Http\Api;
 
-use App\Domain\FuneralHomes\Services\FuneralHomeService;
+use App\Domain\FuneralHomes\Services\EntityService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class GetNearbyFuneralHomesAction
 {
-    public function __construct(private FuneralHomeService $service) {}
+    public function __construct(private EntityService $service) {}
 
     public function __invoke(Request $request): JsonResponse
     {
@@ -17,42 +17,42 @@ class GetNearbyFuneralHomesAction
             'longitude' => ['required', 'numeric', 'between:-180,180'],
         ]);
 
-        $nearbyHomes = $this->service->getNearbyFuneralHomes(
+        $nearbyEntities = $this->service->getNearbyEntities(
             latitude: (float) $validated['latitude'],
             longitude: (float) $validated['longitude'],
             maxDistanceKm: 30,
             limit: 6
         );
 
-        $formattedHomes = $nearbyHomes->map(function ($home) {
+        $formattedEntities = $nearbyEntities->map(function ($entity) {
             return [
-                'id' => $home->id,
-                'title' => $home->title,
-                'slug' => $home->slug,
-                'city' => $home->city,
-                'city_slug' => $home->city_slug,
-                'country_code' => $home->country_code,
-                'address' => $home->address,
-                'phone' => $home->phone,
-                'total_score' => $home->total_score,
-                'reviews_count' => $home->reviews_count,
-                'description' => $home->description ? str($home->description)->limit(120)->toString() : 'Serviços funerários com tradição e respeito.',
-                'distance' => $home->distance,
-                'url' => route('funeral-home-detail', [
-                    'citySlug' => $home->city_slug,
-                    'funeralHomeSlug' => $home->slug,
+                'id' => $entity->id,
+                'title' => $entity->title,
+                'slug' => $entity->slug,
+                'city' => $entity->city,
+                'city_slug' => $entity->city_slug,
+                'country_code' => $entity->country_code,
+                'address' => $entity->address,
+                'phone' => $entity->phone,
+                'total_score' => $entity->total_score,
+                'reviews_count' => $entity->reviews_count,
+                'description' => $entity->description ? str($entity->description)->limit(120)->toString() : 'Serviços funerários com tradição e respeito.',
+                'distance' => $entity->distance,
+                'url' => route('entity-detail', [
+                    'citySlug' => $entity->city_slug,
+                    'entitySlug' => $entity->slug,
                 ]),
-                'image' => $home->images->where('category', 'main')->first()?->local_url ??
-                          $home->images->first()?->local_url ??
+                'image' => $entity->images->where('category', 'main')->first()?->local_url ??
+                          $entity->images->first()?->local_url ??
                           'https://images.unsplash.com/photo-1584907797015-7554cd315667?w=400&h=300&fit=crop',
-                'categories' => $home->categories->pluck('name')->toArray(),
+                'categories' => $entity->categories->pluck('name')->toArray(),
             ];
         });
 
         return response()->json([
             'success' => true,
-            'count' => $formattedHomes->count(),
-            'funeral_homes' => $formattedHomes,
+            'count' => $formattedEntities->count(),
+            'entities' => $formattedEntities,
         ]);
     }
 }

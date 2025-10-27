@@ -2,25 +2,25 @@
 
 namespace Tests\Feature\Pages;
 
-use App\Models\FuneralHome;
+use App\Models\Entity;
 use Tests\TestCase;
 
 class PageActionsTest extends TestCase
 {
     public function test_displays_home_page_with_featured_funeral_homes(): void
     {
-        FuneralHome::factory()->count(10)->create();
+        Entity::factory()->count(10)->create();
 
         $this->get('/')
             ->assertStatus(200)
             ->assertViewIs('pages.home')
             ->assertViewHas('seoPage', 'home')
-            ->assertViewHas('featuredFuneralHomes');
+            ->assertViewHas('featuredEntitys');
     }
 
     public function test_displays_funeral_homes_page_with_pagination(): void
     {
-        FuneralHome::factory()->count(15)->create();
+        Entity::factory()->count(15)->create();
 
         $response = $this->get('/funerarias');
 
@@ -29,15 +29,15 @@ class PageActionsTest extends TestCase
             ->assertViewHas('seoPage', 'funeral-homes')
             ->assertViewHas('funeralHomes');
 
-        $funeralHomes = $response->viewData('funeralHomes');
-        $this->assertTrue($funeralHomes->hasPages());
-        $this->assertEquals(12, $funeralHomes->perPage());
+        $entitys = $response->viewData('funeralHomes');
+        $this->assertTrue($entitys->hasPages());
+        $this->assertEquals(12, $entitys->perPage());
     }
 
     public function test_displays_city_funeral_homes_page(): void
     {
-        $funeralHome = FuneralHome::factory()->create(['city_slug' => 'lisboa']);
-        FuneralHome::factory()->count(5)->create(['city_slug' => 'lisboa']);
+        $entity = Entity::factory()->create(['city_slug' => 'lisboa']);
+        Entity::factory()->count(5)->create(['city_slug' => 'lisboa']);
 
         $this->get('/lisboa')
             ->assertStatus(200)
@@ -55,7 +55,7 @@ class PageActionsTest extends TestCase
 
     public function test_displays_funeral_home_detail_page(): void
     {
-        $funeralHome = FuneralHome::factory()->create([
+        $entity = Entity::factory()->create([
             'city_slug' => 'lisboa',
             'slug' => 'funeraria-exemplo',
         ]);

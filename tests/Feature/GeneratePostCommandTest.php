@@ -12,7 +12,7 @@ class GeneratePostCommandTest extends TestCase
 
     public function test_generate_post_command_with_unused_idea(): void
     {
-        \App\Models\FuneralHome::factory()->count(4)->create([
+        \App\Models\Entity::factory()->count(4)->create([
             'city_slug' => 'lisboa',
         ]);
 

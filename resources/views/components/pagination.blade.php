@@ -32,46 +32,46 @@
 
                 {{-- Pagination Elements --}}
                 @php
-                    $elements = $paginator->getUrlRange(1, $paginator->lastPage());
                     $currentPage = $paginator->currentPage();
                     $lastPage = $paginator->lastPage();
                     
-                    // Show pages around current page
-                    $start = max(1, $currentPage - 2);
-                    $end = min($lastPage, $currentPage + 2);
+                    $showPages = [];
+                    $windowSize = 5;
                     
-                    // Always show first page
-                    if ($start > 1) {
-                        $start = 1;
-                    }
-                    
-                    // Always show last page if we're close to it
-                    if ($end < $lastPage && $currentPage + 2 >= $lastPage - 1) {
-                        $end = $lastPage;
+                    if ($lastPage <= $windowSize + 2) {
+                        for ($i = 1; $i <= $lastPage; $i++) {
+                            $showPages[] = $i;
+                        }
+                    } else {
+                        $showPages[] = 1;
+                        $start = max(2, $currentPage - $windowSize);
+                        $end = min($lastPage - 1, $currentPage + $windowSize);
+                        
+                        if ($start > 2) {
+                            $showPages[] = '...';
+                        }
+                        
+                        for ($i = $start; $i <= $end; $i++) {
+                            $showPages[] = $i;
+                        }
+                        
+                        if ($end < $lastPage - 1) {
+                            $showPages[] = '...';
+                        }
+                        
+                        $showPages[] = $lastPage;
                     }
                 @endphp
 
-                @if ($start > 1)
-                    <a href="{{ $paginator->url(1) }}" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 transition-all duration-200 hover:ring-purple-300 hover:text-purple-700 rounded-md">1</a>
-                    @if ($start > 2)
+                @foreach ($showPages as $page)
+                    @if ($page === '...')
                         <span class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">...</span>
-                    @endif
-                @endif
-
-                @for ($page = $start; $page <= $end; $page++)
-                    @if ($page == $currentPage)
+                    @elseif ($page == $currentPage)
                         <span class="relative z-10 inline-flex items-center bg-purple-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 rounded-md">{{ $page }}</span>
                     @else
                         <a href="{{ $paginator->url($page) }}" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 transition-all duration-200 hover:ring-purple-300 hover:text-purple-700 rounded-md">{{ $page }}</a>
                     @endif
-                @endfor
-
-                @if ($end < $lastPage)
-                    @if ($end < $lastPage - 1)
-                        <span class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">...</span>
-                    @endif
-                    <a href="{{ $paginator->url($lastPage) }}" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 transition-all duration-200 hover:ring-purple-300 hover:text-purple-700 rounded-md">{{ $lastPage }}</a>
-                @endif
+                @endforeach
 
                 {{-- Next Page Link --}}
                 @if ($paginator->hasMorePages())

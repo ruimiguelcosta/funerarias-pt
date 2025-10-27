@@ -11,7 +11,7 @@ class Image extends Model
     use HasFactory;
 
     protected $fillable = [
-        'funeral_home_id',
+        'entity_id',
         'original_url',
         'local_path',
         'filename',
@@ -29,9 +29,9 @@ class Image extends Model
         'downloaded_at' => 'datetime',
     ];
 
-    public function funeralHome(): BelongsTo
+    public function entity(): BelongsTo
     {
-        return $this->belongsTo(FuneralHome::class);
+        return $this->belongsTo(Entity::class);
     }
 
     public function getLocalUrlAttribute(): ?string

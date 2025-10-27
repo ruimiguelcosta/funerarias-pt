@@ -36,7 +36,7 @@
     </div>
 </div>
 
-<div id="funeral-home-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
+<div id="entity-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
     <div class="bg-white rounded-lg shadow-2xl overflow-hidden pointer-events-auto animate-slide-up border-2 border-purple-100 max-w-md w-full">
         <div class="relative">
             <img id="modal-image" src="" alt="" class="w-full h-40 object-cover">
@@ -83,7 +83,7 @@
     
     let map;
     let userMarker;
-    let funeralHomeMarkers = [];
+    let entityMarkers = [];
     
     const mapboxConfig = {
         container: 'map',
@@ -103,10 +103,10 @@
             .setPopup(new mapboxgl.Popup().setHTML('<div class="text-center font-semibold">Você está aqui</div>'))
             .addTo(map);
 
-        loadFuneralHomes(userLat, userLng);
+        loadEntities(userLat, userLng);
     }
 
-    async function loadFuneralHomes(lat, lng) {
+    async function loadEntities(lat, lng) {
         const url = `/api/map-funeral-homes?latitude=${lat}&longitude=${lng}`;
         
         fetch(url)
@@ -114,12 +114,12 @@
             .then(data => {
                 document.getElementById('loading-overlay').classList.add('hidden');
                 
-                if (data.success && data.funeral_homes.length > 0) {
+                if (data.success && data.entities.length > 0) {
                     document.getElementById('location-status').textContent = 
                         `Encontradas ${data.count} funerárias num raio de 50km`;
                     
-                    data.funeral_homes.forEach(home => {
-                        addFuneralHomeMarker(home);
+                    data.entities.forEach(entity => {
+                        addEntityMarker(entity);
                     });
                 } else {
                     document.getElementById('location-status').textContent = 
@@ -134,9 +134,9 @@
             });
     }
 
-    function addFuneralHomeMarker(home) {
+    function addEntityMarker(entity) {
         const el = document.createElement('div');
-        el.className = 'funeral-home-marker';
+        el.className = 'entity-marker';
         el.style.backgroundImage = 'url(/images/marker-funeral-home.png)';
         el.style.width = '32px';
         el.style.height = '32px';
@@ -145,38 +145,38 @@
         el.innerHTML = '<div style="width: 32px; height: 32px; background-color: #16a34a; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"></div>';
 
         const marker = new mapboxgl.Marker(el)
-            .setLngLat([home.longitude, home.latitude])
+            .setLngLat([entity.longitude, entity.latitude])
             .addTo(map);
 
         el.addEventListener('click', () => {
-            showFuneralHomeModal(home);
+            showEntityModal(entity);
         });
 
-        funeralHomeMarkers.push(marker);
+        entityMarkers.push(marker);
     }
 
-    function showFuneralHomeModal(home) {
-        document.getElementById('modal-image').src = home.image;
-        document.getElementById('modal-image').alt = home.title;
-        document.getElementById('modal-title').textContent = home.title;
-        document.getElementById('modal-city').textContent = home.city;
+    function showEntityModal(entity) {
+        document.getElementById('modal-image').src = entity.image;
+        document.getElementById('modal-image').alt = entity.title;
+        document.getElementById('modal-title').textContent = entity.title;
+        document.getElementById('modal-city').textContent = entity.city;
         
-        if (home.phone) {
+        if (entity.phone) {
             document.getElementById('modal-phone-container').classList.remove('hidden');
-            document.getElementById('modal-phone').textContent = home.phone;
-            document.getElementById('modal-phone').href = `tel:${home.phone}`;
+            document.getElementById('modal-phone').textContent = entity.phone;
+            document.getElementById('modal-phone').href = `tel:${entity.phone}`;
         } else {
             document.getElementById('modal-phone-container').classList.add('hidden');
         }
         
-        document.getElementById('modal-distance').textContent = `${home.distance} km de distância`;
-        document.getElementById('modal-link').href = home.url;
+        document.getElementById('modal-distance').textContent = `${entity.distance} km de distância`;
+        document.getElementById('modal-link').href = entity.url;
         
-        document.getElementById('funeral-home-modal').classList.remove('hidden');
+        document.getElementById('entity-modal').classList.remove('hidden');
     }
 
     function closeModal() {
-        document.getElementById('funeral-home-modal').classList.add('hidden');
+        document.getElementById('entity-modal').classList.add('hidden');
     }
 
     document.addEventListener('DOMContentLoaded', function() {

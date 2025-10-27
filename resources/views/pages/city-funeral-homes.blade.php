@@ -26,28 +26,28 @@
                     respeito e profissionalismo.
                 </p>
                 <div class="mt-4 text-sm text-gray-500">
-                    {{ $funeralHomes->total() }} {{ $funeralHomes->total() == 1 ? 'funerária encontrada' : 'funerárias encontradas' }}
+                    {{ $entities->total() }} {{ $entities->total() == 1 ? 'funerária encontrada' : 'funerárias encontradas' }}
                 </div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                @forelse($funeralHomes as $funeralHome)
+                @forelse($entities as $entity)
                     @include('components.funeral-home-card', [
-                        'id' => $funeralHome->id,
-                        'name' => $funeralHome->title,
-                        'slug' => $funeralHome->slug,
-                        'city_slug' => $funeralHome->city_slug,
-                        'city' => $funeralHome->city,
-                        'country_code' => $funeralHome->country_code,
-                        'location' => $funeralHome->city ? $funeralHome->city . ', ' . $funeralHome->country_code : 'Portugal',
-                        'phone' => $funeralHome->phone,
-                        'rating' => $funeralHome->total_score,
-                        'description' => $funeralHome->description ? Str::limit($funeralHome->description, 120) : 'Serviços funerários com tradição e respeito.',
-                        'image' => $funeralHome->images->where('category', 'main')->first()?->local_url ?? 
-                                  $funeralHome->images->first()?->local_url ?? 
+                        'id' => $entity->id,
+                        'name' => $entity->title,
+                        'slug' => $entity->slug,
+                        'city_slug' => $entity->city_slug,
+                        'city' => $entity->city,
+                        'country_code' => $entity->country_code,
+                        'location' => $entity->city ? $entity->city . ', ' . $entity->country_code : 'Portugal',
+                        'phone' => $entity->phone,
+                        'rating' => $entity->total_score,
+                        'description' => $entity->description ? Str::limit($entity->description, 120) : 'Serviços funerários com tradição e respeito.',
+                        'image' => $entity->images->where('category', 'main')->first()?->local_url ?? 
+                                  $entity->images->first()?->local_url ?? 
                                   'https://images.unsplash.com/photo-1584907797015-7554cd315667?w=400&h=300&fit=crop',
-                        'categories' => $funeralHome->categories->pluck('name')->toArray(),
-                        'reviews_count' => $funeralHome->reviews_count
+                        'categories' => $entity->categories->pluck('name')->toArray(),
+                        'reviews_count' => $entity->reviews_count
                     ])
                 @empty
                     <div class="col-span-full text-center py-12">
@@ -57,9 +57,9 @@
             </div>
             
             <!-- Pagination -->
-            @if($funeralHomes->hasPages())
+            @if($entities->hasPages())
                 <div class="mt-12">
-                    <x-pagination :paginator="$funeralHomes" />
+                    <x-pagination :paginator="$entities" />
                 </div>
             @endif
         </div>

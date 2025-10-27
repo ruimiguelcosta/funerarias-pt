@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\FuneralHome;
+use App\Models\Entity;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
@@ -15,7 +15,7 @@ class HomePageActionTest extends TestCase
     {
         Cache::flush();
 
-        FuneralHome::factory()->count(5)->create([
+        Entity::factory()->count(5)->create([
             'city_slug' => 'lisboa',
         ]);
 
@@ -23,7 +23,7 @@ class HomePageActionTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertViewIs('pages.home');
-        $response->assertViewHas('featuredFuneralHomes');
+        $response->assertViewHas('featuredEntitys');
 
         $this->assertTrue(Cache::has('featured_funeral_homes'));
     }
@@ -32,7 +32,7 @@ class HomePageActionTest extends TestCase
     {
         Cache::flush();
 
-        FuneralHome::factory()->count(3)->create([
+        Entity::factory()->count(3)->create([
             'city_slug' => 'porto',
         ]);
 
