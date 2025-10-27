@@ -152,6 +152,7 @@
     
     @include('components.footer')
     @include('components.cookie-consent')
+    <x-statcounter />
     
     @vite(['resources/js/app.js'])
 </body>

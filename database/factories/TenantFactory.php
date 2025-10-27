@@ -35,4 +35,16 @@ class TenantFactory extends Factory
             'is_enabled' => false,
         ]);
     }
+
+    public function withStatcounter(string $scProject = '13179476', string $scSecurity = 'efddaf82'): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'settings' => [
+                'statcounter' => [
+                    'sc_project' => $scProject,
+                    'sc_security' => $scSecurity,
+                ],
+            ],
+        ]);
+    }
 }

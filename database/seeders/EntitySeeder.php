@@ -187,4 +187,3 @@ class EntitySeeder extends Seeder
         }
     }
 }
-

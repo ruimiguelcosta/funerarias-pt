@@ -3,8 +3,10 @@
 namespace App\Filament\Resources\Entities\Actions;
 
 use App\Models\Entity;
+use App\Models\Tenant;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +22,12 @@ class UploadEntitiesJsonAction
             ->icon('heroicon-o-cloud-arrow-up')
             ->color('primary')
             ->form([
+                Select::make('tenant_id')
+                    ->label('Tenant')
+                    ->options(Tenant::query()->pluck('name', 'id'))
+                    ->required()
+                    ->searchable()
+                    ->helperText('Seleciona o tenant para associar as entidades'),
                 FileUpload::make('json_file')
                     ->label('Ficheiro JSON')
                     ->acceptedFileTypes(['application/json'])
@@ -66,16 +74,21 @@ class UploadEntitiesJsonAction
                     $importedCount = 0;
                     $updatedCount = 0;
                     $errors = [];
+                    $tenantId = $data['tenant_id'];
 
-                    DB::transaction(function () use ($entitiesData, &$importedCount, &$updatedCount, &$errors) {
-                        foreach ($entitiesData as $index => $data) {
+                    DB::transaction(function () use ($entitiesData, $tenantId, &$importedCount, &$updatedCount, &$errors) {
+                        foreach ($entitiesData as $index => $entityData) {
                             try {
                                 $existingEntity = Entity::query()
-                                    ->where('place_id', $data['placeId'] ?? null)
-                                    ->orWhere('title', $data['title'] ?? null)
+                                    ->where('tenant_id', $tenantId)
+                                    ->where(function ($query) use ($entityData) {
+                                        $query->where('place_id', $entityData['placeId'] ?? null)
+                                            ->orWhere('title', $entityData['title'] ?? null);
+                                    })
                                     ->first();
 
-                                $processedData = self::processEntityData($data);
+                                $processedData = self::processEntityData($entityData);
+                                $processedData['tenant_id'] = $tenantId;
 
                                 if ($existingEntity) {
                                     $existingEntity->update($processedData);
@@ -88,7 +101,7 @@ class UploadEntitiesJsonAction
                                 $errors[] = 'Linha '.($index + 1).': '.$e->getMessage();
                                 Log::error('Erro ao processar entidade', [
                                     'index' => $index,
-                                    'data' => $data,
+                                    'data' => $entityData,
                                     'error' => $e->getMessage(),
                                 ]);
                             }
@@ -178,4 +191,3 @@ class UploadEntitiesJsonAction
         ];
     }
 }
-

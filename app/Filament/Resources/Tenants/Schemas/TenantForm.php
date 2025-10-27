@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Tenants\Schemas;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
@@ -57,6 +58,26 @@ class TenantForm
                             ->label('Ativo')
                             ->default(true)
                             ->helperText('Desative para suspender temporariamente o tenant'),
+                    ])
+                    ->columns(2),
+
+                Section::make('Configurações de Rastreamento')
+                    ->schema([
+                        Fieldset::make('Statcounter')
+                            ->schema([
+                                TextInput::make('settings.statcounter.sc_project')
+                                    ->label('Statcounter Project ID')
+                                    ->numeric()
+                                    ->helperText('ID do projeto no Statcounter')
+                                    ->maxLength(255),
+
+                                TextInput::make('settings.statcounter.sc_security')
+                                    ->label('Statcounter Security Key')
+                                    ->helperText('Chave de segurança do Statcounter')
+                                    ->maxLength(255)
+                                    ->password()
+                                    ->revealable(),
+                            ]),
                     ])
                     ->columns(2),
             ]);

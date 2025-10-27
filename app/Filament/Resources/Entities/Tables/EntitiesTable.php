@@ -130,7 +130,8 @@ class EntitiesTable
                 ]),
             ])
             ->defaultSort('title')
-            ->paginated([10, 25, 50, 100])
+            ->paginationPageOptions([10, 25, 50, 100])
+            ->defaultPaginationPageOption(25)
             ->recordUrl(null);
     }
 }
