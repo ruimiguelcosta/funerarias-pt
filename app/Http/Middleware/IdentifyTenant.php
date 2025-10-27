@@ -16,6 +16,14 @@ class IdentifyTenant
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Skip tenant identification for admin, Livewire, and Horizon routes
+        if ($request->is('admin/*') ||
+            $request->is('livewire/*') ||
+            $request->is('horizon/*') ||
+            $request->is('_boost/*')) {
+            return $next($request);
+        }
+
         $host = $request->getSchemeAndHttpHost();
 
         $tenant = Tenant::query()
