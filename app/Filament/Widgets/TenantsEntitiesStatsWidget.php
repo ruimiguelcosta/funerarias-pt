@@ -7,7 +7,7 @@ use App\Models\Tenant;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
-class EntitiesAcceptedByTenantWidget extends BaseWidget
+class TenantsEntitiesStatsWidget extends BaseWidget
 {
     protected function getStats(): array
     {
@@ -16,13 +16,23 @@ class EntitiesAcceptedByTenantWidget extends BaseWidget
         $stats = [];
 
         foreach ($tenants as $tenant) {
+            $suggestedCount = Entity::query()
+                ->where('tenant_id', $tenant->id)
+                ->where('is_suggested', true)
+                ->count();
+
             $acceptedCount = Entity::query()
                 ->where('tenant_id', $tenant->id)
                 ->where('is_accepted', true)
                 ->count();
 
-            $stats[] = Stat::make("Entidades Aceites - {$tenant->name}", $acceptedCount)
-                ->description("Entidades aceites para o tenant {$tenant->name}")
+            $stats[] = Stat::make("Sugeridas - {$tenant->name}", $suggestedCount)
+                ->description("Entidades sugeridas para {$tenant->name}")
+                ->descriptionIcon('heroicon-m-light-bulb')
+                ->color('warning');
+
+            $stats[] = Stat::make("Aceites - {$tenant->name}", $acceptedCount)
+                ->description("Entidades aceites para {$tenant->name}")
                 ->descriptionIcon('heroicon-m-check-circle')
                 ->color('success');
         }
