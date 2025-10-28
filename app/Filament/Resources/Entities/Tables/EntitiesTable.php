@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Entities\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -90,17 +91,24 @@ class EntitiesTable
 
                 IconColumn::make('copy_link')
                     ->label('Copiar Link')
-                    ->icon('heroicon-o-clipboard')
-                    ->color('gray')
+                    ->state(true)
+                    ->boolean()
+                    ->trueIcon(Heroicon::ClipboardDocument)
+                    ->falseIcon(Heroicon::ClipboardDocument)
+                    ->trueColor('success')
+                    ->falseColor('gray')
                     ->action(function (Model $record, $livewire) {
+                        $citySlug = $record->city_slug ?? \Str::slug($record->city);
+                        $entitySlug = $record->slug;
+
                         $url = route('entity-detail', [
-                            'citySlug' => $record->city_slug,
-                            'entitySlug' => $record->slug,
+                            'citySlug' => $citySlug,
+                            'entitySlug' => $entitySlug,
                         ]);
 
                         $livewire->js("navigator.clipboard.writeText('{$url}').then(() => { \$wire.dispatch('notify', { message: 'Link copiado!', type: 'success' }); })");
                     })
-                    ->tooltip('Clique para copiar o link desta funerária'),
+                    ->tooltip('Clique para copiar o link desta entidade'),
 
                 TextColumn::make('scraped_at')
                     ->label('Última Atualização')
