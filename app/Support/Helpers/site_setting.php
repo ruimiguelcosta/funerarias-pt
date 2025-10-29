@@ -8,3 +8,5 @@ if (! function_exists('site_setting')) {
         return SiteSetting::get($key, $default);
     }
 }
+
+

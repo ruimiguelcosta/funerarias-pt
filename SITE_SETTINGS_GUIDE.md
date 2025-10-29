@@ -300,3 +300,5 @@ app/Console/Commands/PopulateSiteSettingsCommand.php
 No método `getDefaultSettings()`.
 
 
+
+
