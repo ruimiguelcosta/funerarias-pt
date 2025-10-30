@@ -2,20 +2,25 @@
 
 namespace App\Actions\Http;
 
-use App\Models\FuneralHome;
+use App\Models\Entity;
+use App\Models\Tenant;
 use Illuminate\Http\Response;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 
 class GenerateSitemapAction
 {
-    public function __invoke(): Response
+    public function __invoke(?Tenant $tenant = null): Response
     {
         $sitemap = Sitemap::create();
 
-        $baseUrl = config('app.env') === 'local'
-            ? config('app.url')
-            : 'https://funerariasemportugal.com';
+        $tenant = $tenant ?? app('tenant');
+
+        if (! $tenant) {
+            abort(404, 'Tenant not found');
+        }
+
+        $baseUrl = $tenant->domain;
 
         $sitemap->add(Url::create($baseUrl)
             ->setLastModificationDate(now())
@@ -42,9 +47,9 @@ class GenerateSitemapAction
             ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
             ->setPriority(0.3));
 
-        // Add city pages
-        $cities = FuneralHome::query()
+        $cities = Entity::query()
             ->select('city_slug', 'city')
+            ->where('tenant_id', $tenant->id)
             ->whereNotNull('city_slug')
             ->distinct()
             ->get();
@@ -56,14 +61,14 @@ class GenerateSitemapAction
                 ->setPriority(0.7));
         }
 
-        // Add funeral home detail pages
-        FuneralHome::query()
+        Entity::query()
+            ->where('tenant_id', $tenant->id)
             ->whereNotNull('slug')
             ->whereNotNull('city_slug')
-            ->chunk(100, function ($funeralHomes) use ($sitemap, $baseUrl) {
-                foreach ($funeralHomes as $funeralHome) {
-                    $sitemap->add(Url::create($baseUrl."/{$funeralHome->city_slug}/{$funeralHome->slug}")
-                        ->setLastModificationDate($funeralHome->scraped_at ?? now())
+            ->chunk(100, function ($entities) use ($sitemap, $baseUrl) {
+                foreach ($entities as $entity) {
+                    $sitemap->add(Url::create($baseUrl."/{$entity->city_slug}/{$entity->slug}")
+                        ->setLastModificationDate($entity->scraped_at ?? now())
                         ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
                         ->setPriority(0.8));
                 }
