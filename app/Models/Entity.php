@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\BelongsToTenant;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -121,9 +122,16 @@ class Entity extends Model
 
     public function getUrlAttribute(): string
     {
+        $citySlug = $this->city_slug ?: ($this->city ? Str::slug($this->city) : null);
+        $entitySlug = $this->slug;
+
+        if (empty($citySlug) || empty($entitySlug)) {
+            return '';
+        }
+
         return route('entity-detail', [
-            'citySlug' => $this->city_slug,
-            'entitySlug' => $this->slug,
+            'citySlug' => $citySlug,
+            'entitySlug' => $entitySlug,
         ]);
     }
 }
