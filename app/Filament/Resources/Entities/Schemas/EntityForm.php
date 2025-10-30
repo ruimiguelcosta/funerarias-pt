@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources\Entities\Schemas;
 
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Textarea;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
@@ -14,34 +16,32 @@ class EntityForm
     {
         return $schema
             ->components([
-                Section::make('Informações Básicas')
-                    ->schema([
+                Tabs::make()
+                    ->tabs([
+                        Tab::make('Informações Básicas')
+                            ->schema([
                         TextInput::make('title')
                             ->label('Nome da Funerária')
                             ->required()
                             ->maxLength(255),
 
-                        TextInput::make('slug')
-                            ->label('Slug')
-                            ->maxLength(255)
-                            ->helperText('Deixe vazio para gerar automaticamente'),
-
                         TextInput::make('sub_title')
                             ->label('Subtítulo')
                             ->maxLength(255),
 
-                        Textarea::make('description')
+                        RichEditor::make('description')
                             ->label('Descrição')
-                            ->rows(3),
+                            ->columnSpanFull(),
 
                         TextInput::make('category_name')
                             ->label('Categoria')
                             ->maxLength(255),
                     ])
-                    ->columns(2),
+                            ->columns(2)
+                            ->columnSpanFull(),
 
-                Section::make('Informações de Contato')
-                    ->schema([
+                        Tab::make('Contato')
+                            ->schema([
                         TextInput::make('phone')
                             ->label('Telefone')
                             ->tel()
@@ -61,10 +61,11 @@ class EntityForm
                             ->email()
                             ->maxLength(255),
                     ])
-                    ->columns(2),
+                            ->columns(2)
+                            ->columnSpanFull(),
 
-                Section::make('Localização')
-                    ->schema([
+                        Tab::make('Localização')
+                            ->schema([
                         TextInput::make('address')
                             ->label('Endereço Completo')
                             ->maxLength(255),
@@ -101,10 +102,11 @@ class EntityForm
                             ->label('Plus Code')
                             ->maxLength(255),
                     ])
-                    ->columns(3),
+                            ->columns(3)
+                            ->columnSpanFull(),
 
-                Section::make('Coordenadas Geográficas')
-                    ->schema([
+                        Tab::make('Coordenadas')
+                            ->schema([
                         TextInput::make('latitude')
                             ->label('Latitude')
                             ->numeric()
@@ -115,10 +117,11 @@ class EntityForm
                             ->numeric()
                             ->step(0.00000001),
                     ])
-                    ->columns(2),
+                            ->columns(2)
+                            ->columnSpanFull(),
 
-                Section::make('Informações Adicionais')
-                    ->schema([
+                        Tab::make('Informações Adicionais')
+                            ->schema([
                         TextInput::make('price')
                             ->label('Preço')
                             ->maxLength(255),
@@ -161,10 +164,11 @@ class EntityForm
                             ->label('Rank')
                             ->numeric(),
                     ])
-                    ->columns(3),
+                            ->columns(3)
+                            ->columnSpanFull(),
 
-                Section::make('Status e Controles')
-                    ->schema([
+                        Tab::make('Status e Controles')
+                            ->schema([
                         Toggle::make('permanently_closed')
                             ->label('Fechada Permanentemente'),
 
@@ -195,7 +199,10 @@ class EntityForm
                             ->url()
                             ->maxLength(255),
                     ])
-                    ->columns(4),
+                            ->columns(4)
+                            ->columnSpanFull(),
+                    ])
+                    ->columnSpanFull(),
             ]);
     }
 }
