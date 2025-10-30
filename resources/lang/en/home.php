@@ -1,0 +1,38 @@
+<?php
+
+return [
+    'hero_alt' => 'Funeral services with dignity and respect',
+    'hero_title_line1' => 'Dignity and Respect',
+    'hero_title_line2' => 'in Difficult Times',
+    'hero_subtitle' => 'Find the best funeral services with professionalism, compassion, and dedication to your family.',
+    'cta_view_funeral_homes' => 'View Funeral Homes',
+    'cta_learn_more' => 'Learn More',
+    'nearby_title' => 'Funeral Homes Near You',
+    'nearby_text' => 'We found these nearby funeral homes, ordered by distance for your convenience.',
+    'nearby_loading' => 'Loading nearby funeral homes...',
+    'nearby_map' => 'View Nearby Funeral Homes on Map',
+    'trusted_title' => 'Trusted Funeral Homes',
+    'trusted_text' => 'We select the best funeral homes with excellent services to support your family.',
+    'no_featured' => 'No featured funeral homes found.',
+    'see_all_funeral_homes' => 'View All Funeral Homes',
+    'why_title' => 'Why Choose Us',
+    'why_dignity' => 'Dignity',
+    'why_dignity_text' => 'We treat every family with the utmost respect and dignity.',
+    'why_compassion' => 'Compassion',
+    'why_compassion_text' => 'Emotional support and understanding in difficult moments.',
+    'why_excellence' => 'Excellence',
+    'why_excellence_text' => 'High‑quality services with attention to detail.',
+    'blog_recent' => 'Recent Articles',
+    'blog_subtitle' => 'Useful information and practical guides about funeral services in Portugal',
+    'blog_all' => 'View All Articles',
+    'faq_title_fallback' => 'Frequently Asked Questions',
+    'trust_platform' => 'Why Trust Our Platform',
+    'trust_verified' => 'Verified Funeral Homes',
+    'trust_verified_text' => 'All funeral homes are verified and licensed',
+    'trust_reviews' => 'Real Reviews',
+    'trust_reviews_text' => 'Authentic reviews from families who used the services',
+    'trust_data' => 'Protected Data',
+    'trust_data_text' => 'Your personal data is protected with maximum security',
+];
+
+

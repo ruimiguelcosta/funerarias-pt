@@ -8,7 +8,7 @@
             <source srcset="{{ asset('images/home-large.webp') }}" type="image/webp">
             <img
                 src="{{ asset('images/home.jpg') }}"
-                alt="Serviços funerários com dignidade e respeito"
+                alt="{{ __('home.hero_alt') }}"
                 class="absolute inset-0 w-full h-full object-cover"
                 width="1200"
                 height="800"
@@ -21,13 +21,12 @@
 
         <div class="container mx-auto px-4 relative z-10 text-center">
             <h1 class="font-playfair text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 animate-fade-in">
-                Dignidade e Respeito
+                {{ __('home.hero_title_line1') }}
                 <br />
-                <span class="text-yellow-300">em Momentos Difíceis</span>
+                <span class="text-yellow-300">{{ __('home.hero_title_line2') }}</span>
             </h1>
             <p class="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-8 animate-fade-in">
-                Encontre os melhores serviços funerários com profissionalismo,
-                compaixão e dedicação à sua família.
+                {{ __('home.hero_subtitle') }}
             </p>
             <form method="GET" action="{{ route('search.results') }}" class="max-w-3xl mx-auto animate-fade-in" data-behavior="native">
                 <div class="flex gap-3">
@@ -38,12 +37,12 @@
             <div class="flex gap-4 justify-center mt-6 animate-fade-in">
                 <a href="{{ route('funeral-homes') }}">
                     <button class="bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold hover:opacity-90 transition-all duration-300">
-                        Ver Funerárias
+                        {{ __('home.cta_view_funeral_homes') }}
                     </button>
                 </a>
                 <a href="{{ route('about') }}">
                     <button class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-purple-700 transition-all duration-300">
-                        Saber Mais
+                        {{ __('home.cta_learn_more') }}
                     </button>
                 </a>
             </div>
@@ -61,18 +60,17 @@
                     </svg>
                 </div>
                 <h2 class="font-playfair text-4xl md:text-5xl font-bold text-purple-700 mb-4">
-                    Funerárias Perto de Si
+                    {{ __('home.nearby_title') }}
                 </h2>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Encontramos estas funerárias nas proximidades da sua localização,
-                    ordenadas por distância para facilitar o seu acesso.
+                    {{ __('home.nearby_text') }}
                 </p>
             </div>
 
-            <div id="nearby-loading" class="text-center py-12 hidden">
-                <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
-                <p class="mt-4 text-gray-600">A carregar funerárias próximas...</p>
-            </div>
+                <div id="nearby-loading" class="text-center py-12 hidden">
+                    <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+                    <p class="mt-4 text-gray-600">{{ __('home.nearby_loading') }}</p>
+                </div>
 
             <div id="nearby-funeral-homes-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             </div>
@@ -83,7 +81,7 @@
                     <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
                     </svg>
-                    <span>Ver Funerárias Próximas no Mapa</span>
+                    <span>{{ __('home.nearby_map') }}</span>
                 </a>
             </div>
         </div>
@@ -94,11 +92,10 @@
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
                 <h2 class="font-playfair text-4xl md:text-5xl font-bold text-purple-700 mb-4">
-                    Funerárias de Confiança
+                    {{ __('home.trusted_title') }}
                 </h2>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Selecionamos as melhores funerárias com serviços de excelência
-                    para apoiar sua família neste momento.
+                    {{ __('home.trusted_text') }}
                 </p>
             </div>
 
@@ -114,7 +111,7 @@
                         'location' => $entity->city ? $entity->city . ', ' . $entity->country_code : 'Portugal',
                         'phone' => $entity->phone,
                         'rating' => $entity->total_score,
-                        'description' => $entity->description ? Str::limit($entity->description, 120) : 'Serviços funerários com tradição e respeito.',
+                        'description' => $entity->description ? Str::limit($entity->description, 120) : __('home.hero_alt'),
                         'image' => $entity->images->where('category', 'main')->first()?->local_url ??
                                   $entity->images->first()?->local_url ??
                                   'https://images.unsplash.com/photo-1584907797015-7554cd315667?w=400&h=300&fit=crop',
@@ -123,7 +120,7 @@
                     ])
                 @empty
                     <div class="col-span-full text-center py-12">
-                        <p class="text-gray-500 text-lg">Nenhuma funerária em destaque encontrada.</p>
+                        <p class="text-gray-500 text-lg">{{ __('home.no_featured') }}</p>
                     </div>
                 @endforelse
             </div>
@@ -132,7 +129,7 @@
             <div class="text-center mt-12">
                 <a href="{{ route('funeral-homes') }}"
                    class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-500 text-white font-semibold rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl">
-                    <span>Ver Todas as Funerárias</span>
+                    <span>{{ __('home.see_all_funeral_homes') }}</span>
                     <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
@@ -146,7 +143,7 @@
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto">
                 <h2 class="font-playfair text-4xl md:text-5xl font-bold text-purple-700 text-center mb-12">
-                    Por Que Escolher-nos
+                    {{ __('home.why_title') }}
                 </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -155,10 +152,10 @@
                             <span class="text-3xl">🕊️</span>
                         </div>
                         <h3 class="font-playfair text-xl font-semibold text-purple-700 mb-2">
-                            Dignidade
+                            {{ __('home.why_dignity') }}
                         </h3>
                         <p class="text-gray-600">
-                            Tratamos cada família com o máximo respeito e dignidade.
+                            {{ __('home.why_dignity_text') }}
                         </p>
                     </div>
 
@@ -167,10 +164,10 @@
                             <span class="text-3xl">💛</span>
                         </div>
                         <h3 class="font-playfair text-xl font-semibold text-purple-700 mb-2">
-                            Compaixão
+                            {{ __('home.why_compassion') }}
                         </h3>
                         <p class="text-gray-600">
-                            Apoio emocional e compreensão em momentos difíceis.
+                            {{ __('home.why_compassion_text') }}
                         </p>
                     </div>
 
@@ -179,10 +176,10 @@
                             <span class="text-3xl">⭐</span>
                         </div>
                         <h3 class="font-playfair text-xl font-semibold text-purple-700 mb-2">
-                            Excelência
+                            {{ __('home.why_excellence') }}
                         </h3>
                         <p class="text-gray-600">
-                            Serviços de qualidade superior com atenção aos detalhes.
+                            {{ __('home.why_excellence_text') }}
                         </p>
                     </div>
                 </div>
@@ -197,10 +194,10 @@
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
                 <h2 class="font-playfair text-4xl md:text-5xl font-bold text-purple-700 mb-4">
-                    Artigos Recentes
+                    {{ __('home.blog_recent') }}
                 </h2>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Informação útil e guias práticos sobre serviços funerários em Portugal
+                    {{ __('home.blog_subtitle') }}
                 </p>
             </div>
 
@@ -222,7 +219,7 @@
             <div class="text-center mt-12">
                 <a href="{{ route('blog') }}"
                    class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-500 text-white font-semibold rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl">
-                    <span>Ver Todos os Artigos</span>
+                    <span>{{ __('home.blog_all') }}</span>
                     <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
@@ -238,7 +235,7 @@
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto">
                 <h2 class="font-playfair text-4xl md:text-5xl font-bold text-purple-700 text-center mb-12">
-                    {{ site_setting('faq.title', 'Perguntas Frequentes') }}
+                    {{ site_setting('faq.title', __('home.faq_title_fallback')) }}
                 </h2>
 
                 <x-faq-section :faqs="$faqs" />
@@ -251,7 +248,7 @@
         <div class="container mx-auto px-4">
             <div class="max-w-5xl mx-auto">
                 <h2 class="font-playfair text-4xl md:text-5xl font-bold text-purple-700 text-center mb-12">
-                    Por Que Confiar na Nossa Plataforma
+                    {{ __('home.trust_platform') }}
                 </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
@@ -260,10 +257,10 @@
                             <span class="text-2xl">✓</span>
                         </div>
                         <h3 class="font-playfair text-lg font-semibold text-gray-900 mb-2">
-                            Funerárias Verificadas
+                            {{ __('home.trust_verified') }}
                         </h3>
                         <p class="text-gray-600 text-sm">
-                            Todas as funerárias são verificadas e possuem licenças válidas
+                            {{ __('home.trust_verified_text') }}
                         </p>
                     </div>
 
@@ -272,10 +269,10 @@
                             <span class="text-2xl">⭐</span>
                         </div>
                         <h3 class="font-playfair text-lg font-semibold text-gray-900 mb-2">
-                            Avaliações Reais
+                            {{ __('home.trust_reviews') }}
                         </h3>
                         <p class="text-gray-600 text-sm">
-                            Avaliações autênticas de famílias que utilizaram os serviços
+                            {{ __('home.trust_reviews_text') }}
                         </p>
                     </div>
 
@@ -284,10 +281,10 @@
                             <span class="text-2xl">🔒</span>
                         </div>
                         <h3 class="font-playfair text-lg font-semibold text-gray-900 mb-2">
-                            Dados Protegidos
+                            {{ __('home.trust_data') }}
                         </h3>
                         <p class="text-gray-600 text-sm">
-                            Seus dados pessoais são protegidos com máxima segurança
+                            {{ __('home.trust_data_text') }}
                         </p>
                     </div>
                 </div>

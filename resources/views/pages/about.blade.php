@@ -3,14 +3,14 @@
 @section('content')
 <div class="pt-20">
     <x-breadcrumbs :items="[
-        ['label' => 'Início', 'url' => '/'],
-        ['label' => 'Quem Somos']
+        ['label' => __('pages.breadcrumbs.home'), 'url' => '/'],
+        ['label' => __('pages.breadcrumbs.about')]
     ]" />
 
     <div class="relative">
         <x-hero-image 
             :src="asset('images/cemiterio.jpg')"
-            alt="Quem somos - Plataforma de serviços funerários"
+            alt="{{ __('pages.about.hero_alt') }}"
             class="h-[400px] w-full object-cover"
             size="large"
             :priority="true"
@@ -22,22 +22,20 @@
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto">
                 <h1 class="font-playfair text-4xl md:text-5xl font-bold text-purple-700 mb-8">
-                    Quem Somos
+                    {{ __('pages.about.title') }}
                 </h1>
 
                 <div class="prose prose-lg max-w-none">
                     <p class="text-gray-600 text-lg mb-8">
-                        Somos uma plataforma dedicada a conectar famílias com serviços funerários de qualidade e confiança em momentos de necessidade.
+                        {{ __('pages.about.intro') }}
                     </p>
 
                     <section class="mb-12">
                         <h2 class="font-playfair text-2xl font-semibold text-gray-900 mb-4">
-                            Nossa Missão
+                            {{ __('pages.about.mission_title') }}
                         </h2>
                         <p class="text-gray-600">
-                            Nossa missão é proporcionar dignidade, respeito e apoio às famílias durante os momentos mais difíceis.
-                            Conectamos você com funerárias profissionais que oferecem serviços compassivos e de alta qualidade,
-                            garantindo que cada despedida seja realizada com a reverência que seus entes queridos merecem.
+                            {{ __('pages.about.mission_text') }}
                         </p>
                     </section>
 
@@ -49,10 +47,10 @@
                                 </svg>
                             </div>
                             <h3 class="font-playfair text-xl font-semibold text-gray-900 mb-3">
-                                Compaixão
+                                {{ __('pages.about.card_compassion_title') }}
                             </h3>
                             <p class="text-gray-600">
-                                Entendemos a importância de oferecer suporte emocional e serviços que honrem a memória de seus entes queridos.
+                                {{ __('pages.about.card_compassion_text') }}
                             </p>
                         </div>
 
@@ -63,10 +61,10 @@
                                 </svg>
                             </div>
                             <h3 class="font-playfair text-xl font-semibold text-gray-900 mb-3">
-                                Parceiros de Confiança
+                                {{ __('pages.about.card_partners_title') }}
                             </h3>
                             <p class="text-gray-600">
-                                Trabalhamos apenas com funerárias certificadas e avaliadas, garantindo qualidade e profissionalismo.
+                                {{ __('pages.about.card_partners_text') }}
                             </p>
                         </div>
 
@@ -77,10 +75,10 @@
                                 </svg>
                             </div>
                             <h3 class="font-playfair text-xl font-semibold text-gray-900 mb-3">
-                                Excelência
+                                {{ __('pages.about.card_excellence_title') }}
                             </h3>
                             <p class="text-gray-600">
-                                Comprometemo-nos com os mais altos padrões de serviço em todos os aspectos da nossa plataforma.
+                                {{ __('pages.about.card_excellence_text') }}
                             </p>
                         </div>
 
@@ -91,36 +89,32 @@
                                 </svg>
                             </div>
                             <h3 class="font-playfair text-xl font-semibold text-gray-900 mb-3">
-                                Transparência
+                                {{ __('pages.about.card_transparency_title') }}
                             </h3>
                             <p class="text-gray-600">
-                                Fornecemos informações claras sobre serviços, preços e avaliações para ajudá-lo a tomar decisões informadas.
+                                {{ __('pages.about.card_transparency_text') }}
                             </p>
                         </div>
                     </section>
 
                     <section class="mb-12">
                         <h2 class="font-playfair text-2xl font-semibold text-gray-900 mb-4">
-                            Nossa História
+                            {{ __('pages.about.history_title') }}
                         </h2>
                         <p class="text-gray-600 mb-4">
-                            Fundada com o objetivo de facilitar o acesso a serviços funerários de qualidade, nossa plataforma nasceu
-                            da necessidade de criar uma ponte entre famílias e funerárias profissionais em todo o país.
+                            {{ __('pages.about.history_text_1') }}
                         </p>
                         <p class="text-gray-600">
-                            Ao longo dos anos, temos ajudado milhares de famílias a encontrar os serviços adequados para homenagear
-                            seus entes queridos com dignidade e respeito, tornando-nos uma referência no setor.
+                            {{ __('pages.about.history_text_2') }}
                         </p>
                     </section>
 
                     <section>
                         <h2 class="font-playfair text-2xl font-semibold text-gray-900 mb-4">
-                            Compromisso com Você
+                            {{ __('pages.about.commitment_title') }}
                         </h2>
                         <p class="text-gray-600">
-                            Estamos comprometidos em oferecer uma experiência que combine tecnologia, empatia e profissionalismo.
-                            Nossa equipe trabalha constantemente para melhorar nossa plataforma e garantir que você encontre
-                            exatamente o que precisa quando mais precisa.
+                            {{ __('pages.about.commitment_text') }}
                         </p>
                     </section>
                 </div>

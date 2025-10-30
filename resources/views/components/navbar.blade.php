@@ -11,15 +11,15 @@
         <div class="hidden md:flex items-center gap-8">
             <a href="{{ route('home') }}"
                class="text-sm font-medium transition-all duration-300 hover:text-purple-800 {{ request()->routeIs('home') ? 'text-purple-800' : 'text-purple-700' }}">
-                Início
+                {{ __('nav.home') }}
             </a>
             <a href="{{ route('funeral-homes') }}"
                class="text-sm font-medium transition-all duration-300 hover:text-purple-800 {{ request()->routeIs('funeral-homes') ? 'text-purple-800' : 'text-purple-700' }}">
-                Funerárias
+                {{ __('nav.funeral_homes') }}
             </a>
             <a href="{{ route('blog') }}"
                class="text-sm font-medium transition-all duration-300 hover:text-purple-800 {{ request()->routeIs('blog') ? 'text-purple-800' : 'text-purple-700' }}">
-                Blog
+                {{ __('nav.blog') }}
             </a>
             <a href="{{ route('search') }}"
                class="text-sm font-medium transition-all duration-300 hover:text-purple-800 {{ request()->routeIs('search') || request()->routeIs('search.results') ? 'text-purple-800' : 'text-purple-700' }}">
@@ -27,11 +27,11 @@
             </a>
             <a href="{{ route('about') }}"
                class="text-sm font-medium transition-all duration-300 hover:text-purple-800 {{ request()->routeIs('about') ? 'text-purple-800' : 'text-purple-700' }}">
-                Quem Somos
+                {{ __('nav.about') }}
             </a>
             <a href="{{ route('contact') }}">
                 <button class="bg-gradient-to-r from-purple-600 to-purple-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-all duration-300">
-                    Contactar
+                    {{ __('nav.contact') }}
                 </button>
             </a>
         </div>

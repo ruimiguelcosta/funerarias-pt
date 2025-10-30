@@ -1,0 +1,38 @@
+<?php
+
+return [
+    'hero_alt' => 'Servicios funerarios con dignidad y respeto',
+    'hero_title_line1' => 'Dignidad y Respeto',
+    'hero_title_line2' => 'en Momentos Difíciles',
+    'hero_subtitle' => 'Encuentre los mejores servicios funerarios con profesionalismo, compasión y dedicación para su familia.',
+    'cta_view_funeral_homes' => 'Ver Funerarias',
+    'cta_learn_more' => 'Saber Más',
+    'nearby_title' => 'Funerarias Cerca de Usted',
+    'nearby_text' => 'Encontramos estas funerarias cercanas, ordenadas por distancia para su comodidad.',
+    'nearby_loading' => 'Cargando funerarias cercanas...',
+    'nearby_map' => 'Ver Funerarias Cercanas en el Mapa',
+    'trusted_title' => 'Funerarias de Confianza',
+    'trusted_text' => 'Seleccionamos las mejores funerarias con servicios de excelencia para apoyar a su familia.',
+    'no_featured' => 'No se han encontrado funerarias destacadas.',
+    'see_all_funeral_homes' => 'Ver Todas las Funerarias',
+    'why_title' => 'Por Qué Elegirnos',
+    'why_dignity' => 'Dignidad',
+    'why_dignity_text' => 'Tratamos a cada familia con el máximo respeto y dignidad.',
+    'why_compassion' => 'Compasión',
+    'why_compassion_text' => 'Apoyo emocional y comprensión en momentos difíciles.',
+    'why_excellence' => 'Excelencia',
+    'why_excellence_text' => 'Servicios de alta calidad con atención al detalle.',
+    'blog_recent' => 'Artículos Recientes',
+    'blog_subtitle' => 'Información útil y guías prácticas sobre servicios funerarios en Portugal',
+    'blog_all' => 'Ver Todos los Artículos',
+    'faq_title_fallback' => 'Preguntas Frecuentes',
+    'trust_platform' => 'Por Qué Confiar en Nuestra Plataforma',
+    'trust_verified' => 'Funerarias Verificadas',
+    'trust_verified_text' => 'Todas las funerarias están verificadas y cuentan con licencias válidas',
+    'trust_reviews' => 'Reseñas Reales',
+    'trust_reviews_text' => 'Reseñas auténticas de familias que utilizaron los servicios',
+    'trust_data' => 'Datos Protegidos',
+    'trust_data_text' => 'Sus datos personales están protegidos con la máxima seguridad',
+];
+
+

@@ -7,6 +7,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -145,7 +146,9 @@ class EntitiesTable
                     DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('title')
+            ->modifyQueryUsing(function (Builder $query) {
+                $query->orderBy('is_suggested', 'asc')->orderBy('title', 'asc');
+            })
             ->paginationPageOptions([10, 25, 50, 100])
             ->defaultPaginationPageOption(25)
             ->recordUrl(null);
