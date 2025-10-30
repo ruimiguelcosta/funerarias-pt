@@ -78,6 +78,18 @@ class TenantForm
                                     ->password()
                                     ->revealable(),
                             ]),
+                        Fieldset::make('Bing Webmaster')
+                            ->schema([
+                                TextInput::make('settings.bing_verify_name')
+                                    ->label('Bing Verify Name')
+                                    ->helperText('Nome do meta para verificação do Bing')
+                                    ->maxLength(255),
+
+                                TextInput::make('settings.bing_verify_value')
+                                    ->label('Bing Verify Value')
+                                    ->helperText('Valor do meta para verificação do Bing')
+                                    ->maxLength(255),
+                            ]),
                     ])
                     ->columns(2),
             ]);

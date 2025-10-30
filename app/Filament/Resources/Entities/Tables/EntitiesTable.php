@@ -99,8 +99,14 @@ class EntitiesTable
                     ->trueColor('success')
                     ->falseColor('gray')
                     ->action(function (Model $record, $livewire) {
-                        $citySlug = $record->city_slug ?? \Str::slug($record->city);
+                        $citySlug = $record->city_slug ?: ($record->city ? \Str::slug($record->city) : null);
                         $entitySlug = $record->slug;
+
+                        if (empty($citySlug) || empty($entitySlug)) {
+                            $livewire->js("\$wire.dispatch('notify', { message: 'Esta entidade não tem cidade/slug definidos.', type: 'danger' })");
+
+                            return;
+                        }
 
                         $url = route('entity-detail', [
                             'citySlug' => $citySlug,
