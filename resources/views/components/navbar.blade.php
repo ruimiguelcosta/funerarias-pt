@@ -21,6 +21,10 @@
                class="text-sm font-medium transition-all duration-300 hover:text-purple-800 {{ request()->routeIs('blog') ? 'text-purple-800' : 'text-purple-700' }}">
                 Blog
             </a>
+            <a href="{{ route('search') }}"
+               class="text-sm font-medium transition-all duration-300 hover:text-purple-800 {{ request()->routeIs('search') || request()->routeIs('search.results') ? 'text-purple-800' : 'text-purple-700' }}">
+                {{ __('nav.search') }}
+            </a>
             <a href="{{ route('about') }}"
                class="text-sm font-medium transition-all duration-300 hover:text-purple-800 {{ request()->routeIs('about') ? 'text-purple-800' : 'text-purple-700' }}">
                 Quem Somos

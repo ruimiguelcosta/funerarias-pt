@@ -1,0 +1,12 @@
+{
+    "search.title": "Búsqueda",
+    "search.subtitle": "Busca por nombre, dirección o categoría.",
+    "search.placeholder": "Ej.: Funeraria Central Oporto",
+    "search.placeholder_home": "Buscar funerarias, direcciones o categorías",
+    "search.button": "Buscar",
+    "search.results_for": "Resultados para:",
+    "search.no_results": "Sin resultados para esta búsqueda.",
+    "nav.search": "Búsqueda"
+}
+
+

@@ -17,6 +17,8 @@ use App\Actions\Http\Pages\NearbyMapPageAction;
 use App\Actions\Http\Pages\NotFoundPageAction;
 use App\Actions\Http\Pages\PrivacyPolicyPageAction;
 use App\Actions\Http\Pages\TermsPageAction;
+use App\Actions\Http\Pages\SearchPageAction;
+use App\Actions\Http\Pages\SearchResultsPageAction;
 use App\Actions\Http\Reviews\StoreReviewAction;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +51,9 @@ Route::get('/termos', TermsPageAction::class)->name('terms');
 Route::post('/reviews', StoreReviewAction::class)->name('reviews.store');
 
 Route::get('/sitemap.xml', GenerateSitemapAction::class)->name('sitemap');
+
+Route::get('/pesquisa', SearchPageAction::class)->name('search');
+Route::get('/pesquisa/resultados', SearchResultsPageAction::class)->name('search.results');
 
 Route::get('/{citySlug}', CityFuneralHomesPageAction::class)->name('city-funeral-homes');
 

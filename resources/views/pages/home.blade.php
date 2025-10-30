@@ -29,7 +29,13 @@
                 Encontre os melhores serviços funerários com profissionalismo,
                 compaixão e dedicação à sua família.
             </p>
-            <div class="flex gap-4 justify-center animate-fade-in">
+            <form method="GET" action="{{ route('search.results') }}" class="max-w-3xl mx-auto animate-fade-in" data-behavior="native">
+                <div class="flex gap-3">
+                    <input type="text" name="q" value="{{ request('q') }}" placeholder="{{ __('search.placeholder_home') }}" class="w-full border border-white bg-transparent text-white placeholder-white rounded-lg px-4 py-4 text-lg" required minlength="2" />
+                    <button type="submit" class="bg-yellow-400 text-gray-900 px-6 py-4 rounded-lg text-lg font-semibold hover:bg-yellow-500 transition">{{ __('search.button') }}</button>
+                </div>
+            </form>
+            <div class="flex gap-4 justify-center mt-6 animate-fade-in">
                 <a href="{{ route('funeral-homes') }}">
                     <button class="bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold hover:opacity-90 transition-all duration-300">
                         Ver Funerárias

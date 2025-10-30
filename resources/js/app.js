@@ -205,6 +205,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     forms.forEach(form => {
         form.addEventListener('submit', function(e) {
+            const isGet = (form.getAttribute('method') || 'GET').toUpperCase() === 'GET';
+            const isNative = form.getAttribute('data-behavior') === 'native';
+            if (isGet || isNative) {
+                return;
+            }
             e.preventDefault();
             
             // Basic form validation

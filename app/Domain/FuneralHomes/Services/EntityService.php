@@ -6,6 +6,7 @@ use App\Models\Entity;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class EntityService
 {
@@ -93,6 +94,46 @@ class EntityService
             ->values();
 
         return $nearbyEntities;
+    }
+
+    public function search(string $query, int $perPage = 12): LengthAwarePaginator
+    {
+        $columns = ['title', 'description', 'category_name', 'address'];
+        $driver = DB::connection()->getDriverName();
+
+        $builder = Entity::query()
+            ->with(['images', 'categories'])
+            ->whereNotNull('city_slug');
+
+        $cityTerm = null;
+        if (preg_match('/\\b(?:em|no|na|de)\\s+([\\p{L}\\- ]{3,})$/iu', $query, $m)) {
+            $cityTerm = trim($m[1]);
+        }
+
+        if ($cityTerm) {
+            $builder->where(function ($q) use ($cityTerm) {
+                $q->where('city', 'like', '%'.$cityTerm.'%')
+                  ->orWhere('city_slug', 'like', '%'.strtolower(str_replace(' ', '-', $cityTerm)).'%')
+                  ->orWhere('address', 'like', '%'.$cityTerm.'%');
+            });
+        }
+
+        if (in_array($driver, ['mysql', 'mariadb'])) {
+            $builder->whereFullText($columns, $query);
+            $builder->orderByRaw('MATCH (title, description, category_name, address) AGAINST (? IN NATURAL LANGUAGE MODE) DESC', [$query]);
+        } else {
+            $builder->where(function ($q) use ($columns, $query) {
+                foreach ($columns as $col) {
+                    $q->orWhere($col, 'like', '%'.$query.'%');
+                }
+            });
+
+            if ($cityTerm) {
+                $builder->orderByRaw('CASE WHEN city LIKE ? THEN 0 WHEN address LIKE ? THEN 1 ELSE 2 END', ['%'.$cityTerm.'%', '%'.$cityTerm.'%']);
+            }
+        }
+
+        return $builder->paginate($perPage)->appends(['q' => $query]);
     }
 
     private function calculateDistance(float $lat1, float $lon1, float $lat2, float $lon2): float

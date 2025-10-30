@@ -72,8 +72,17 @@
     "The :attribute must be a string.": "O campo :attribute deve ser texto.",
     "The :attribute must be a number.": "O campo :attribute deve ser um número.",
     "The :attribute must be a date.": "O campo :attribute deve ser uma data.",
-    "The :attribute has already been taken.": "O campo :attribute já está a ser utilizado."
+    "The :attribute has already been taken.": "O campo :attribute já está a ser utilizado.",
+    "search.title": "Pesquisa",
+    "search.subtitle": "Procure por nome, morada ou categoria.",
+    "search.placeholder": "Ex.: Funerária Central Porto",
+    "search.placeholder_home": "Pesquisar funerárias, moradas ou categorias",
+    "search.button": "Pesquisar",
+    "search.results_for": "Resultados para:",
+    "search.no_results": "Sem resultados para esta pesquisa.",
+    "nav.search": "Pesquisa"
 }
+
 
 
 
